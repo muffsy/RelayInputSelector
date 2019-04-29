@@ -1,2 +1,2 @@
 # RelayInputSelector
-Arduino: Muffsy Relay Input Selector
+Muffsy Relay Input Selector - Arduino
