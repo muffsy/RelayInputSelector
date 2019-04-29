@@ -1,0 +1,24 @@
+{
+    "Header": {
+        "Comment": "All values are metric (mm)",
+        "CreationDate": "2019-04-29T21:47:50Z",
+        "GenerationSoftware": {
+            "Application": "EAGLE",
+            "Vendor": "Autodesk",
+            "Version": "9.3.2"
+        },
+        "Part": "Single"
+    },
+    "Overall": {
+        "BoardThickness": 1.57,
+        "LayerNumber": 2,
+        "Name": {
+            "ProjectId": "relayinput4"
+        },
+        "Owner": "Havard Skrodahl <skrodahl@gmail.com>",
+        "Size": {
+            "X": 75.616,
+            "Y": 81.345778
+        }
+    }
+}
