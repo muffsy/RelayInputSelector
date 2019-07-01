@@ -77,6 +77,9 @@
  //Solid State Relay
  #define SSR 17
 
+// Mute LED
+#define muteLed 4
+
  // Rotary Encoder variables
  int counter = 0; 
  int previous = 0;
@@ -218,6 +221,7 @@ void powerOn() { // Only called if powerState is 0 (Powering on)
     Serial.print(" ** Reading saved relay state from NVRAM: ");
     Serial.println(relayCount);
     digitalWrite(relays[4],LOW);
+    digitalWrite(muteLed,HIGH);
     mute = 1;
     Serial.println("\n ** Mute Relay turned ON");
     Serial.println(" ** All input relays are turned OFF");
@@ -238,10 +242,12 @@ void toggleMute() {
     if (mute == 0) {
       Serial.println("[http://muffsy.com]: Mute relay turned ON\n");
       digitalWrite(relays[4],LOW);
+      digitalWrite(muteLed,HIGH);
       mute = 1;
     } else {
       Serial.println("[http://muffsy.com]: Mute relay turned OFF\n");
       digitalWrite(relays[4],HIGH);
+      digitalWrite(muteLed,LOW);
       mute = 0;
     }
 }
