@@ -4988,10 +4988,10 @@ Source: http://www.mew-europe.com/..  en_ds_61020_0004.pdf</description>
 <part name="AMP-L" library="relswitch" library_urn="urn:adsk.eagle:library:1620313" deviceset="SE11" device="" package3d_urn="urn:adsk.eagle:package:1620533/1"/>
 <part name="AMP-R" library="relswitch" library_urn="urn:adsk.eagle:library:1620313" deviceset="SE11" device="" package3d_urn="urn:adsk.eagle:package:1620533/1"/>
 <part name="AMP-GND" library="relswitch" library_urn="urn:adsk.eagle:library:1620313" deviceset="SE11" device="" package3d_urn="urn:adsk.eagle:package:1620533/1"/>
-<part name="OUTL" library="relswitch" library_urn="urn:adsk.eagle:library:1620313" deviceset="SE11" device="" package3d_urn="urn:adsk.eagle:package:1620533/1"/>
+<part name="OUT-L" library="relswitch" library_urn="urn:adsk.eagle:library:1620313" deviceset="SE11" device="" package3d_urn="urn:adsk.eagle:package:1620533/1"/>
 <part name="SUPPLY6" library="relswitch" library_urn="urn:adsk.eagle:library:1620313" deviceset="GND" device=""/>
-<part name="OUTR" library="relswitch" library_urn="urn:adsk.eagle:library:1620313" deviceset="SE11" device="" package3d_urn="urn:adsk.eagle:package:1620533/1"/>
-<part name="OUTG" library="relswitch" library_urn="urn:adsk.eagle:library:1620313" deviceset="SE11" device="" package3d_urn="urn:adsk.eagle:package:1620533/1"/>
+<part name="OUT-R" library="relswitch" library_urn="urn:adsk.eagle:library:1620313" deviceset="SE11" device="" package3d_urn="urn:adsk.eagle:package:1620533/1"/>
+<part name="OUT-GND" library="relswitch" library_urn="urn:adsk.eagle:library:1620313" deviceset="SE11" device="" package3d_urn="urn:adsk.eagle:package:1620533/1"/>
 <part name="PGND" library="relswitch" library_urn="urn:adsk.eagle:library:1620313" deviceset="SE11" device="" package3d_urn="urn:adsk.eagle:package:1620533/1"/>
 <part name="R1" library="relswitch" library_urn="urn:adsk.eagle:library:1620313" deviceset="R-EU_" device="0207/10" package3d_urn="urn:adsk.eagle:package:1620454/2" value="1k"/>
 <part name="R2" library="relswitch" library_urn="urn:adsk.eagle:library:1620313" deviceset="R-EU_" device="0207/10" package3d_urn="urn:adsk.eagle:package:1620454/2" value="1k"/>
@@ -5115,8 +5115,8 @@ Source: http://www.mew-europe.com/..  en_ds_61020_0004.pdf</description>
 <instance part="SUPPLY4" gate="GND" x="200.66" y="198.12" smashed="yes" rot="R90">
 <attribute name="VALUE" x="203.835" y="196.215" size="1.778" layer="96" rot="R90"/>
 </instance>
-<instance part="SUPPLY5" gate="GND" x="254" y="198.12" smashed="yes" rot="R90">
-<attribute name="VALUE" x="257.175" y="196.215" size="1.778" layer="96" rot="R90"/>
+<instance part="SUPPLY5" gate="GND" x="266.7" y="213.36" smashed="yes" rot="R90">
+<attribute name="VALUE" x="269.875" y="211.455" size="1.778" layer="96" rot="R90"/>
 </instance>
 <instance part="A-LEFT" gate="1" x="12.7" y="187.96" smashed="yes" rot="R180">
 <attribute name="NAME" x="13.97" y="185.039" size="1.778" layer="95" rot="R180"/>
@@ -5154,25 +5154,25 @@ Source: http://www.mew-europe.com/..  en_ds_61020_0004.pdf</description>
 <instance part="D-GND" gate="1" x="195.58" y="187.96" smashed="yes" rot="R180">
 <attribute name="NAME" x="199.39" y="185.039" size="1.778" layer="95" rot="R180"/>
 </instance>
-<instance part="AMP-L" gate="1" x="228.6" y="187.96" smashed="yes" rot="R180">
-<attribute name="NAME" x="232.41" y="185.039" size="1.778" layer="95" rot="R180"/>
+<instance part="AMP-L" gate="1" x="218.44" y="233.68" smashed="yes">
+<attribute name="NAME" x="214.63" y="236.601" size="1.778" layer="95"/>
 </instance>
-<instance part="AMP-R" gate="1" x="241.3" y="187.96" smashed="yes" rot="R180">
-<attribute name="NAME" x="243.586" y="185.039" size="1.778" layer="95" rot="R180"/>
+<instance part="AMP-R" gate="1" x="231.14" y="233.68" smashed="yes">
+<attribute name="NAME" x="226.314" y="236.601" size="1.778" layer="95"/>
 </instance>
-<instance part="AMP-GND" gate="1" x="248.92" y="187.96" smashed="yes" rot="R180">
-<attribute name="NAME" x="257.81" y="185.039" size="1.778" layer="95" rot="R180"/>
+<instance part="AMP-GND" gate="1" x="256.54" y="233.68" smashed="yes">
+<attribute name="NAME" x="253.238" y="236.601" size="1.778" layer="95"/>
 </instance>
-<instance part="OUTL" gate="1" x="5.08" y="233.68" smashed="yes">
+<instance part="OUT-L" gate="1" x="5.08" y="233.68" smashed="yes">
 <attribute name="NAME" x="2.286" y="237.109" size="1.778" layer="95"/>
 </instance>
 <instance part="SUPPLY6" gate="GND" x="38.1" y="223.52" smashed="yes" rot="R90">
 <attribute name="VALUE" x="41.275" y="221.615" size="1.778" layer="96" rot="R90"/>
 </instance>
-<instance part="OUTR" gate="1" x="17.78" y="233.68" smashed="yes">
+<instance part="OUT-R" gate="1" x="17.78" y="233.68" smashed="yes">
 <attribute name="NAME" x="15.494" y="236.855" size="1.778" layer="95"/>
 </instance>
-<instance part="OUTG" gate="1" x="30.48" y="233.68" smashed="yes">
+<instance part="OUT-GND" gate="1" x="30.48" y="233.68" smashed="yes">
 <attribute name="NAME" x="28.194" y="236.855" size="1.778" layer="95"/>
 </instance>
 <instance part="PGND" gate="1" x="198.12" y="91.44" smashed="yes" rot="R90">
@@ -5259,14 +5259,14 @@ Source: http://www.mew-europe.com/..  en_ds_61020_0004.pdf</description>
 <instance part="SSR" gate="1" x="182.88" y="22.86" smashed="yes" rot="R180">
 <attribute name="NAME" x="184.15" y="19.939" size="1.778" layer="95" rot="R180"/>
 </instance>
-<instance part="PRE-L" gate="1" x="220.98" y="233.68" smashed="yes">
-<attribute name="NAME" x="217.17" y="236.601" size="1.778" layer="95"/>
+<instance part="PRE-L" gate="1" x="228.6" y="187.96" smashed="yes" rot="R180">
+<attribute name="NAME" x="232.41" y="185.039" size="1.778" layer="95" rot="R180"/>
 </instance>
-<instance part="PRE-R" gate="1" x="233.68" y="233.68" smashed="yes">
-<attribute name="NAME" x="229.87" y="236.601" size="1.778" layer="95"/>
+<instance part="PRE-R" gate="1" x="241.3" y="187.96" smashed="yes" rot="R180">
+<attribute name="NAME" x="245.11" y="185.039" size="1.778" layer="95" rot="R180"/>
 </instance>
-<instance part="PRE-GND" gate="1" x="248.92" y="233.68" smashed="yes">
-<attribute name="NAME" x="245.11" y="236.601" size="1.778" layer="95"/>
+<instance part="PRE-GND" gate="1" x="256.54" y="187.96" smashed="yes" rot="R180">
+<attribute name="NAME" x="260.35" y="185.039" size="1.778" layer="95" rot="R180"/>
 </instance>
 <instance part="Q1" gate="A" x="20.32" y="132.08" smashed="yes" rot="MR90">
 <attribute name="NAME" x="25.399109375" y="129.54" size="1.77861875" layer="95" rot="MR0"/>
@@ -5352,20 +5352,6 @@ Source: http://www.mew-europe.com/..  en_ds_61020_0004.pdf</description>
 <pinref part="D-RIGHT" gate="1" pin="MP"/>
 </segment>
 </net>
-<net name="N$9" class="0">
-<segment>
-<pinref part="K5" gate="2" pin="S"/>
-<wire x1="228.6" y1="190.5" x2="228.6" y2="195.58" width="0.1524" layer="91"/>
-<pinref part="AMP-L" gate="1" pin="MP"/>
-</segment>
-</net>
-<net name="N$10" class="0">
-<segment>
-<pinref part="K5" gate="1" pin="S"/>
-<wire x1="241.3" y1="190.5" x2="241.3" y2="195.58" width="0.1524" layer="91"/>
-<pinref part="AMP-R" gate="1" pin="MP"/>
-</segment>
-</net>
 <net name="N$12" class="0">
 <segment>
 <pinref part="K1" gate="1" pin="P"/>
@@ -5383,7 +5369,7 @@ Source: http://www.mew-europe.com/..  en_ds_61020_0004.pdf</description>
 <junction x="17.78" y="218.44"/>
 <junction x="76.2" y="218.44"/>
 <junction x="129.54" y="218.44"/>
-<pinref part="OUTR" gate="1" pin="MP"/>
+<pinref part="OUT-R" gate="1" pin="MP"/>
 </segment>
 </net>
 <net name="N$15" class="0">
@@ -5525,7 +5511,7 @@ Source: http://www.mew-europe.com/..  en_ds_61020_0004.pdf</description>
 <wire x1="116.84" y1="213.36" x2="63.5" y2="213.36" width="0.1524" layer="91"/>
 <pinref part="K1" gate="2" pin="P"/>
 <wire x1="5.08" y1="200.66" x2="5.08" y2="213.36" width="0.1524" layer="91"/>
-<pinref part="OUTL" gate="1" pin="MP"/>
+<pinref part="OUT-L" gate="1" pin="MP"/>
 <wire x1="5.08" y1="213.36" x2="5.08" y2="231.14" width="0.1524" layer="91"/>
 <wire x1="63.5" y1="213.36" x2="5.08" y2="213.36" width="0.1524" layer="91"/>
 <junction x="5.08" y="213.36"/>
@@ -5559,15 +5545,23 @@ Source: http://www.mew-europe.com/..  en_ds_61020_0004.pdf</description>
 </segment>
 <segment>
 <pinref part="SUPPLY5" gate="GND" pin="GND"/>
-<wire x1="251.46" y1="198.12" x2="248.92" y2="198.12" width="0.1524" layer="91"/>
-<wire x1="248.92" y1="198.12" x2="248.92" y2="190.5" width="0.1524" layer="91"/>
+<wire x1="264.16" y1="213.36" x2="256.54" y2="213.36" width="0.1524" layer="91"/>
+<pinref part="K5" gate="1" pin="O"/>
+<wire x1="241.3" y1="205.74" x2="241.3" y2="213.36" width="0.1524" layer="91"/>
+<wire x1="241.3" y1="213.36" x2="256.54" y2="213.36" width="0.1524" layer="91"/>
+<junction x="256.54" y="213.36"/>
 <pinref part="AMP-GND" gate="1" pin="MP"/>
+<wire x1="256.54" y1="231.14" x2="256.54" y2="213.36" width="0.1524" layer="91"/>
+<wire x1="241.3" y1="213.36" x2="228.6" y2="213.36" width="0.1524" layer="91"/>
+<junction x="241.3" y="213.36"/>
+<pinref part="K5" gate="2" pin="O"/>
+<wire x1="228.6" y1="213.36" x2="228.6" y2="205.74" width="0.1524" layer="91"/>
 <pinref part="PRE-GND" gate="1" pin="MP"/>
-<wire x1="248.92" y1="231.14" x2="248.92" y2="198.12" width="0.1524" layer="91"/>
-<junction x="248.92" y="198.12"/>
+<wire x1="256.54" y1="190.5" x2="256.54" y2="213.36" width="0.1524" layer="91"/>
+<junction x="256.54" y="213.36"/>
 </segment>
 <segment>
-<pinref part="OUTG" gate="1" pin="MP"/>
+<pinref part="OUT-GND" gate="1" pin="MP"/>
 <pinref part="SUPPLY6" gate="GND" pin="GND"/>
 <wire x1="30.48" y1="231.14" x2="30.48" y2="223.52" width="0.1524" layer="91"/>
 <wire x1="30.48" y1="223.52" x2="35.56" y2="223.52" width="0.1524" layer="91"/>
@@ -5873,20 +5867,6 @@ Source: http://www.mew-europe.com/..  en_ds_61020_0004.pdf</description>
 <wire x1="226.06" y1="60.96" x2="231.14" y2="60.96" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="N$41" class="0">
-<segment>
-<pinref part="K5" gate="1" pin="P"/>
-<wire x1="233.68" y1="231.14" x2="233.68" y2="200.66" width="0.1524" layer="91"/>
-<pinref part="PRE-R" gate="1" pin="MP"/>
-</segment>
-</net>
-<net name="N$42" class="0">
-<segment>
-<pinref part="K5" gate="2" pin="P"/>
-<wire x1="220.98" y1="231.14" x2="220.98" y2="200.66" width="0.1524" layer="91"/>
-<pinref part="PRE-L" gate="1" pin="MP"/>
-</segment>
-</net>
 <net name="N$11" class="0">
 <segment>
 <pinref part="R1" gate="G$1" pin="2"/>
@@ -5981,6 +5961,36 @@ Source: http://www.mew-europe.com/..  en_ds_61020_0004.pdf</description>
 <wire x1="231.14" y1="58.42" x2="243.84" y2="58.42" width="0.1524" layer="91"/>
 <junction x="231.14" y="58.42"/>
 <label x="243.84" y="60.96" size="1.6764" layer="95" rot="R180"/>
+</segment>
+</net>
+<net name="N$9" class="0">
+<segment>
+<pinref part="K5" gate="2" pin="S"/>
+<pinref part="PRE-L" gate="1" pin="MP"/>
+<wire x1="228.6" y1="195.58" x2="228.6" y2="190.5" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$10" class="0">
+<segment>
+<pinref part="K5" gate="1" pin="S"/>
+<pinref part="PRE-R" gate="1" pin="MP"/>
+<wire x1="241.3" y1="195.58" x2="241.3" y2="190.5" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$30" class="0">
+<segment>
+<pinref part="AMP-R" gate="1" pin="MP"/>
+<wire x1="231.14" y1="231.14" x2="231.14" y2="200.66" width="0.1524" layer="91"/>
+<pinref part="K5" gate="1" pin="P"/>
+<wire x1="231.14" y1="200.66" x2="233.68" y2="200.66" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$31" class="0">
+<segment>
+<pinref part="AMP-L" gate="1" pin="MP"/>
+<wire x1="218.44" y1="231.14" x2="218.44" y2="200.66" width="0.1524" layer="91"/>
+<pinref part="K5" gate="2" pin="P"/>
+<wire x1="218.44" y1="200.66" x2="220.98" y2="200.66" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>

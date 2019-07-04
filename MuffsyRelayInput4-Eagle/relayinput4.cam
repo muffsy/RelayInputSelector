@@ -9,6 +9,7 @@
     "output_type": "directory",
     "outputs": [
         {
+            "filename_prefix": "gerbers",
             "format_specifier": {
                 "decimal": 3,
                 "integer": 3
@@ -32,7 +33,7 @@
             ]
         },
         {
-            "filename_prefix": "",
+            "filename_prefix": "gerbers",
             "format_specifier": {
                 "decimal": 4,
                 "integer": 3

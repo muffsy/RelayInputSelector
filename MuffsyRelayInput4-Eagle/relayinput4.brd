@@ -1016,15 +1016,15 @@ design rules under a new name.</description>
 <attribute name="NAME" x="68.5165" y="9.7155" size="1.016" layer="25" ratio="10"/>
 <attribute name="VALUE" x="66.294" y="10.541" size="0.0254" layer="27"/>
 </element>
-<element name="OUTL" library="relswitch" library_urn="urn:adsk.eagle:library:1620313" package="SE11" package3d_urn="urn:adsk.eagle:package:1620533/1" value="SE11" x="53.9115" y="73.9775" smashed="yes" rot="R270">
-<attribute name="NAME" x="52.2605" y="77.5335" size="1.016" layer="25" ratio="10"/>
+<element name="OUT-L" library="relswitch" library_urn="urn:adsk.eagle:library:1620313" package="SE11" package3d_urn="urn:adsk.eagle:package:1620533/1" value="SE11" x="53.9115" y="73.9775" smashed="yes" rot="R270">
+<attribute name="NAME" x="51.7525" y="77.5335" size="1.016" layer="25" ratio="10"/>
 <attribute name="VALUE" x="54.2925" y="73.9775" size="0.0254" layer="27" rot="R270"/>
 </element>
-<element name="OUTR" library="relswitch" library_urn="urn:adsk.eagle:library:1620313" package="SE11" package3d_urn="urn:adsk.eagle:package:1620533/1" value="SE11" x="48.8315" y="73.9775" smashed="yes" rot="R270">
-<attribute name="NAME" x="46.9265" y="77.5335" size="1.016" layer="25" ratio="10"/>
+<element name="OUT-R" library="relswitch" library_urn="urn:adsk.eagle:library:1620313" package="SE11" package3d_urn="urn:adsk.eagle:package:1620533/1" value="SE11" x="48.8315" y="73.9775" smashed="yes" rot="R270">
+<attribute name="NAME" x="45.9105" y="77.5335" size="1.016" layer="25" ratio="10"/>
 <attribute name="VALUE" x="49.2125" y="73.9775" size="0.0254" layer="27" rot="R270"/>
 </element>
-<element name="OUTG" library="relswitch" library_urn="urn:adsk.eagle:library:1620313" package="SE11" package3d_urn="urn:adsk.eagle:package:1620533/1" value="SE11" x="58.9915" y="73.9775" smashed="yes" rot="R270">
+<element name="OUT-GND" library="relswitch" library_urn="urn:adsk.eagle:library:1620313" package="SE11" package3d_urn="urn:adsk.eagle:package:1620533/1" value="SE11" x="58.9915" y="73.9775" smashed="yes" rot="R270">
 <attribute name="NAME" x="57.404" y="77.5335" size="1.016" layer="25" ratio="10"/>
 <attribute name="VALUE" x="59.3725" y="73.9775" size="0.0254" layer="27" rot="R270"/>
 </element>
@@ -1210,25 +1210,12 @@ design rules under a new name.</description>
 <wire x1="66.294" y1="29.21" x2="65.024" y2="29.21" width="0.508" layer="1"/>
 <wire x1="65.024" y1="29.21" x2="58.674" y2="22.86" width="0.508" layer="1"/>
 </signal>
-<signal name="N$9">
-<contactref element="K5" pad="7"/>
-<contactref element="AMP-L" pad="MP"/>
-<wire x1="66.294" y1="17.78" x2="63.754" y2="20.32" width="0.508" layer="1"/>
-<wire x1="63.754" y1="20.32" x2="61.214" y2="20.32" width="0.508" layer="1"/>
-<wire x1="61.214" y1="20.32" x2="58.674" y2="17.78" width="0.508" layer="1"/>
-</signal>
-<signal name="N$10">
-<contactref element="K5" pad="4"/>
-<contactref element="AMP-R" pad="MP"/>
-<wire x1="66.294" y1="13.97" x2="62.484" y2="13.97" width="0.508" layer="1"/>
-<wire x1="62.484" y1="13.97" x2="58.674" y2="10.16" width="0.508" layer="1"/>
-</signal>
 <signal name="N$12">
 <contactref element="K1" pad="3"/>
 <contactref element="K2" pad="3"/>
 <contactref element="K3" pad="3"/>
 <contactref element="K4" pad="3"/>
-<contactref element="OUTR" pad="MP"/>
+<contactref element="OUT-R" pad="MP"/>
 <wire x1="48.8315" y1="64.77" x2="48.8315" y2="50.8" width="0.508" layer="16"/>
 <wire x1="48.8315" y1="50.8" x2="48.8315" y2="38.1" width="0.508" layer="16"/>
 <wire x1="48.8315" y1="64.77" x2="48.8315" y2="73.9775" width="0.508" layer="16"/>
@@ -1343,7 +1330,7 @@ design rules under a new name.</description>
 <contactref element="K3" pad="8"/>
 <contactref element="K4" pad="8"/>
 <contactref element="K1" pad="8"/>
-<contactref element="OUTL" pad="MP"/>
+<contactref element="OUT-L" pad="MP"/>
 <wire x1="63.754" y1="71.12" x2="56.1975" y2="71.12" width="0.508" layer="16"/>
 <wire x1="56.134" y1="71.12" x2="56.134" y2="68.58" width="0.508" layer="16"/>
 <wire x1="63.754" y1="58.42" x2="63.754" y2="71.12" width="0.508" layer="16"/>
@@ -1363,14 +1350,16 @@ design rules under a new name.</description>
 <contactref element="B-GND" pad="MP"/>
 <contactref element="C-GND" pad="MP"/>
 <contactref element="D-GND" pad="MP"/>
-<contactref element="AMP-GND" pad="MP"/>
 <polygon width="0.254" layer="1" isolate="0.254">
 <vertex x="75.819" y="0"/>
 <vertex x="75.819" y="81.28"/>
-<vertex x="53.9115" y="81.28"/>
-<vertex x="53.9115" y="0"/>
+<vertex x="53.4035" y="81.28"/>
+<vertex x="53.4035" y="0"/>
 </polygon>
-<contactref element="OUTG" pad="MP"/>
+<contactref element="OUT-GND" pad="MP"/>
+<contactref element="K5" pad="2"/>
+<contactref element="AMP-GND" pad="MP"/>
+<contactref element="K5" pad="9"/>
 <contactref element="PRE-GND" pad="MP"/>
 </signal>
 <signal name="N$14">
@@ -1407,8 +1396,8 @@ design rules under a new name.</description>
 <polygon width="0.254" layer="1" isolate="0.254" rank="5">
 <vertex x="0.254" y="81.28"/>
 <vertex x="0.254" y="0"/>
-<vertex x="52.324" y="0"/>
-<vertex x="52.324" y="81.28"/>
+<vertex x="51.816" y="0"/>
+<vertex x="51.816" y="81.28"/>
 </polygon>
 <contactref element="ESP32" pad="38"/>
 <contactref element="JP2" pad="1"/>
@@ -1605,19 +1594,6 @@ design rules under a new name.</description>
 <wire x1="33.274" y1="33.02" x2="33.264" y2="33.03" width="0.508" layer="16"/>
 <wire x1="33.264" y1="33.03" x2="33.074" y2="33.03" width="0.508" layer="16"/>
 </signal>
-<signal name="N$41">
-<contactref element="K5" pad="3"/>
-<contactref element="PRE-R" pad="MP"/>
-<wire x1="56.134" y1="10.16" x2="56.134" y2="6.35" width="0.508" layer="16"/>
-<wire x1="57.404" y1="5.08" x2="56.134" y2="6.35" width="0.508" layer="16"/>
-</signal>
-<signal name="N$42">
-<contactref element="K5" pad="8"/>
-<contactref element="PRE-L" pad="MP"/>
-<wire x1="48.514" y1="8.89" x2="52.324" y2="5.08" width="0.508" layer="16"/>
-<wire x1="56.134" y1="17.78" x2="48.514" y2="11.43" width="0.508" layer="16"/>
-<wire x1="48.514" y1="11.43" x2="48.514" y2="8.89" width="0.508" layer="16"/>
-</signal>
 <signal name="N$11">
 <contactref element="R1" pad="2"/>
 <contactref element="Q1" pad="B"/>
@@ -1680,6 +1656,34 @@ design rules under a new name.</description>
 <wire x1="37.074" y1="30.49" x2="37.084" y2="30.48" width="0.508" layer="16"/>
 <wire x1="28.339725" y1="33.02" x2="26.67" y2="33.02" width="0.508" layer="16"/>
 <wire x1="33.074" y1="30.49" x2="28.339725" y2="33.02" width="0.508" layer="16"/>
+</signal>
+<signal name="N$9">
+<contactref element="K5" pad="7"/>
+<contactref element="PRE-L" pad="MP"/>
+<wire x1="52.324" y1="5.08" x2="51.562" y2="5.08" width="0.508" layer="16"/>
+<wire x1="51.562" y1="5.08" x2="49.022" y2="7.62" width="0.508" layer="16"/>
+<wire x1="49.022" y1="7.62" x2="49.022" y2="12.4968" width="0.508" layer="16"/>
+<wire x1="49.022" y1="12.4968" x2="58.674" y2="16.3576" width="0.508" layer="16"/>
+<wire x1="58.674" y1="16.3576" x2="58.674" y2="17.78" width="0.508" layer="16"/>
+</signal>
+<signal name="N$10">
+<contactref element="K5" pad="4"/>
+<contactref element="PRE-R" pad="MP"/>
+<wire x1="57.404" y1="5.08" x2="58.674" y2="10.16" width="0.508" layer="16"/>
+</signal>
+<signal name="N$30">
+<contactref element="AMP-R" pad="MP"/>
+<contactref element="K5" pad="3"/>
+<wire x1="66.294" y1="13.97" x2="58.674" y2="13.97" width="0.508" layer="1"/>
+<wire x1="58.674" y1="13.97" x2="56.134" y2="11.03923125" width="0.508" layer="1"/>
+<wire x1="56.134" y1="11.03923125" x2="56.134" y2="10.16" width="0.508" layer="1"/>
+</signal>
+<signal name="N$31">
+<contactref element="AMP-L" pad="MP"/>
+<contactref element="K5" pad="8"/>
+<wire x1="66.294" y1="17.78" x2="63.754" y2="20.32" width="0.508" layer="1"/>
+<wire x1="57.658" y1="20.32" x2="56.134" y2="17.78" width="0.508" layer="1"/>
+<wire x1="63.754" y1="20.32" x2="57.658" y2="20.32" width="0.508" layer="1"/>
 </signal>
 </signals>
 <mfgpreviewcolors>
