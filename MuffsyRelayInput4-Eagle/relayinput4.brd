@@ -1028,7 +1028,7 @@ design rules under a new name.</description>
 <attribute name="VALUE" x="49.2125" y="73.9775" size="0.0254" layer="27" rot="R270"/>
 </element>
 <element name="OUT-GND" library="relswitch" library_urn="urn:adsk.eagle:library:1620313" package="SE11" package3d_urn="urn:adsk.eagle:package:1620533/1" value="SE11" x="58.9915" y="73.9775" smashed="yes" rot="R270">
-<attribute name="NAME" x="57.912" y="77.5335" size="1.016" layer="25" ratio="10"/>
+<attribute name="NAME" x="57.404" y="77.5335" size="1.016" layer="25" ratio="10"/>
 <attribute name="VALUE" x="59.3725" y="73.9775" size="0.0254" layer="27" rot="R270"/>
 </element>
 <element name="PGND" library="relswitch" library_urn="urn:adsk.eagle:library:1620313" package="SE11" package3d_urn="urn:adsk.eagle:package:1620533/1" value="SE11" x="17.399" y="5.08" smashed="yes" rot="R270">
