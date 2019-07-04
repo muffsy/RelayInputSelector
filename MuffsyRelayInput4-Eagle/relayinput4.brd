@@ -33,7 +33,7 @@
 <layer number="23" name="tOrigins" color="15" fill="1" visible="yes" active="yes"/>
 <layer number="24" name="bOrigins" color="15" fill="1" visible="yes" active="yes"/>
 <layer number="25" name="tNames" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="26" name="bNames" color="7" fill="1" visible="no" active="yes"/>
+<layer number="26" name="bNames" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="27" name="tValues" color="7" fill="1" visible="no" active="yes"/>
 <layer number="28" name="bValues" color="7" fill="1" visible="no" active="yes"/>
 <layer number="29" name="tStop" color="7" fill="3" visible="yes" active="yes"/>
@@ -155,8 +155,9 @@
 <wire x1="0.254" y1="3.83" x2="4.064" y2="0.02" width="0" layer="20" curve="90"/>
 <wire x1="4.064" y1="0.02" x2="70.81" y2="0.02" width="0" layer="20"/>
 <wire x1="70.81" y1="0.02" x2="75.87" y2="3.81" width="0" layer="20" curve="90"/>
-<text x="18.034" y="78.232" size="1.27" layer="25">Muffsy Relay Input Selector</text>
-<text x="18.161" y="75.946" size="1.27" layer="25">http://muffsy.com</text>
+<text x="19.304" y="75.184" size="1.4224" layer="25">Muffsy
+Relay Input Selector 4</text>
+<text x="7.493" y="70.866" size="1.27" layer="25">http://muffsy.com</text>
 <text x="4.064" y="56.515" size="1.016" layer="25" distance="150" rot="R180">3V3
 EN
 SVP
@@ -195,39 +196,41 @@ IO15
 SD1
 SD0
 CLK</text>
-<text x="33.02" y="50.8" size="1.27" layer="26" rot="MR0"> Relay 1: IO16
+<text x="28.194" y="44.958" size="1.27" layer="26" rot="MR0"> Relay 1: IO16
  Relay 2: IO12
  Reiay 3: IO27
  Relay 4: IO33
  Relay 5: IO32</text>
-<text x="66.04" y="67.945" size="1.778" layer="26" rot="MR0">Relay 1</text>
-<text x="66.04" y="55.245" size="1.778" layer="26" rot="MR0">Relay 2</text>
-<text x="66.04" y="42.2275" size="1.778" layer="26" rot="MR0">Relay 3</text>
-<text x="65.7225" y="29.5275" size="1.778" layer="26" rot="MR0">Relay 4</text>
-<text x="65.7225" y="17.145" size="1.778" layer="26" rot="MR0">Relay 5</text>
-<text x="44.1325" y="81.2165" size="1.778" layer="26" rot="MR0">http://muffsy.com</text>
-<wire x1="12.0015" y1="75.8825" x2="12.0015" y2="79.0575" width="1.016" layer="29"/>
-<wire x1="13.589" y1="77.47" x2="13.589" y2="75.8825" width="0.6096" layer="29"/>
-<wire x1="15.1765" y1="79.0575" x2="15.1765" y2="75.8825" width="1.016" layer="29"/>
-<wire x1="12.0015" y1="79.0575" x2="13.589" y2="77.47" width="0.6096" layer="29"/>
-<wire x1="13.589" y1="77.47" x2="15.1765" y2="79.0575" width="0.6096" layer="29"/>
-<wire x1="11.684" y1="75.565" x2="12.319" y2="75.565" width="1.016" layer="29"/>
-<wire x1="14.859" y1="75.565" x2="15.494" y2="75.565" width="1.016" layer="29"/>
-<wire x1="10.7315" y1="80.01" x2="16.4465" y2="80.01" width="0.254" layer="25"/>
-<wire x1="16.4465" y1="80.01" x2="16.4465" y2="74.6125" width="0.254" layer="25"/>
-<wire x1="16.4465" y1="74.6125" x2="10.7315" y2="74.6125" width="0.254" layer="25"/>
-<wire x1="10.7315" y1="74.6125" x2="10.7315" y2="80.01" width="0.254" layer="25"/>
-<wire x1="12.319" y1="79.0575" x2="12.0015" y2="79.0575" width="1.016" layer="29"/>
-<wire x1="12.0015" y1="79.0575" x2="11.684" y2="79.0575" width="1.016" layer="29"/>
-<wire x1="14.859" y1="79.0575" x2="15.494" y2="79.0575" width="1.016" layer="29"/>
-<wire x1="13.2715" y1="75.8825" x2="13.9065" y2="75.8825" width="0.6096" layer="29"/>
-<text x="29.05125" y="48.768" size="1.27" layer="26" rot="MR0">SSR: IO17</text>
+<text x="60.706" y="63.881" size="1.778" layer="26" rot="MR0">Relay 1</text>
+<text x="60.706" y="51.181" size="1.778" layer="26" rot="MR0">Relay 2</text>
+<text x="60.706" y="38.9255" size="1.778" layer="26" rot="MR0">Relay 3</text>
+<text x="60.6425" y="25.9715" size="1.778" layer="26" rot="MR0">Relay 4</text>
+<text x="60.6425" y="14.097" size="1.778" layer="26" rot="MR0">Relay 5</text>
+<wire x1="13.2715" y1="75.3745" x2="13.2715" y2="78.5495" width="1.016" layer="29"/>
+<wire x1="14.859" y1="76.962" x2="14.859" y2="75.3745" width="0.6096" layer="29"/>
+<wire x1="16.4465" y1="78.5495" x2="16.4465" y2="75.3745" width="1.016" layer="29"/>
+<wire x1="13.2715" y1="78.5495" x2="14.859" y2="76.962" width="0.6096" layer="29"/>
+<wire x1="14.859" y1="76.962" x2="16.4465" y2="78.5495" width="0.6096" layer="29"/>
+<wire x1="12.954" y1="75.057" x2="13.589" y2="75.057" width="1.016" layer="29"/>
+<wire x1="16.129" y1="75.057" x2="16.764" y2="75.057" width="1.016" layer="29"/>
+<wire x1="12.0015" y1="79.502" x2="17.7165" y2="79.502" width="0.254" layer="25"/>
+<wire x1="17.7165" y1="79.502" x2="17.7165" y2="74.1045" width="0.254" layer="25"/>
+<wire x1="17.7165" y1="74.1045" x2="12.0015" y2="74.1045" width="0.254" layer="25"/>
+<wire x1="12.0015" y1="74.1045" x2="12.0015" y2="79.502" width="0.254" layer="25"/>
+<wire x1="13.589" y1="78.5495" x2="13.2715" y2="78.5495" width="1.016" layer="29"/>
+<wire x1="13.2715" y1="78.5495" x2="12.954" y2="78.5495" width="1.016" layer="29"/>
+<wire x1="16.129" y1="78.5495" x2="16.764" y2="78.5495" width="1.016" layer="29"/>
+<wire x1="14.5415" y1="75.3745" x2="15.1765" y2="75.3745" width="0.6096" layer="29"/>
+<text x="24.22525" y="42.926" size="1.27" layer="26" rot="MR0">SSR: IO17</text>
 <text x="68.5165" y="71.12" size="1.016" layer="25">INPUTS:</text>
 <dimension x1="0.254" y1="77.47" x2="75.87" y2="77.47" x3="38.062" y3="86.36" textsize="1.778" layer="51"/>
 <dimension x1="4.064" y1="0.02" x2="4.064" y2="81.28" x3="-6.096" y3="40.65" textsize="1.778" layer="51"/>
 <text x="68.5165" y="20.32" size="1.016" layer="25">MUTE:</text>
-<text x="28.79725" y="13.97" size="1.27" layer="26" rot="MR0">ESP32</text>
-<text x="46.32325" y="78.74" size="1.27" layer="26" rot="MR0">Muffsy Relay Input Selector 5</text>
+<text x="23.97125" y="10.16" size="1.27" layer="26" rot="MR0">ESP32</text>
+<text x="29.718" y="19.558" size="1.27" layer="26" rot="MR0">Power ON LED: IO2</text>
+<text x="33.02" y="72.136" size="1.778" layer="26" rot="MR0">http://muffsy.com</text>
+<text x="58.674" y="11.938" size="1.27" layer="26" rot="MR0">MUTE</text>
+<text x="36.068" y="69.85" size="1.4224" layer="26" rot="MR0">Muffsy Relay Input Selector 4</text>
 </plain>
 <libraries>
 <library name="relswitch" urn="urn:adsk.eagle:library:1616637">
@@ -1017,15 +1020,15 @@ design rules under a new name.</description>
 <attribute name="VALUE" x="66.294" y="10.541" size="0.0254" layer="27"/>
 </element>
 <element name="OUT-L" library="relswitch" library_urn="urn:adsk.eagle:library:1620313" package="SE11" package3d_urn="urn:adsk.eagle:package:1620533/1" value="SE11" x="53.9115" y="73.9775" smashed="yes" rot="R270">
-<attribute name="NAME" x="51.7525" y="77.5335" size="1.016" layer="25" ratio="10"/>
+<attribute name="NAME" x="52.0065" y="77.5335" size="1.016" layer="25" ratio="10"/>
 <attribute name="VALUE" x="54.2925" y="73.9775" size="0.0254" layer="27" rot="R270"/>
 </element>
 <element name="OUT-R" library="relswitch" library_urn="urn:adsk.eagle:library:1620313" package="SE11" package3d_urn="urn:adsk.eagle:package:1620533/1" value="SE11" x="48.8315" y="73.9775" smashed="yes" rot="R270">
-<attribute name="NAME" x="45.9105" y="77.5335" size="1.016" layer="25" ratio="10"/>
+<attribute name="NAME" x="46.4185" y="77.5335" size="1.016" layer="25" ratio="10"/>
 <attribute name="VALUE" x="49.2125" y="73.9775" size="0.0254" layer="27" rot="R270"/>
 </element>
 <element name="OUT-GND" library="relswitch" library_urn="urn:adsk.eagle:library:1620313" package="SE11" package3d_urn="urn:adsk.eagle:package:1620533/1" value="SE11" x="58.9915" y="73.9775" smashed="yes" rot="R270">
-<attribute name="NAME" x="57.404" y="77.5335" size="1.016" layer="25" ratio="10"/>
+<attribute name="NAME" x="57.912" y="77.5335" size="1.016" layer="25" ratio="10"/>
 <attribute name="VALUE" x="59.3725" y="73.9775" size="0.0254" layer="27" rot="R270"/>
 </element>
 <element name="PGND" library="relswitch" library_urn="urn:adsk.eagle:library:1620313" package="SE11" package3d_urn="urn:adsk.eagle:package:1620533/1" value="SE11" x="17.399" y="5.08" smashed="yes" rot="R270">
