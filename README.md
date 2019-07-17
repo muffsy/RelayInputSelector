@@ -9,7 +9,7 @@ The Muffsy Relay Input Selector is a simple, reliable, high quality, DIY stereo 
 
 This kit is meant to be paired with a preamplifier circuit, such as the Muffsy BSTRD Class-A Tube Preamp, Pass Labs B1 and many others.
 
-This project is open source, licensed under the BSD 3-Clause "New" or "Revised" License
+This project, including the schematic and board layout, is open source. It's licensed under the BSD 3-Clause "New" or "Revised" License.
 
 **A note on the IRremote.h library:**
 The IR receiver can now be turned on and off, using "*irrecv.enableIRIn(true);*" and "*irrecv.enableIRIn(false);*" instead of the library's default "*irrecv.enableIRIn();*".
