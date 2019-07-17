@@ -2,7 +2,7 @@
 
 This library enables you to send and receive using infra-red signals on an Arduino.
 
-Tutorials and more information will be made available on [the official homepage](http://z3t0.github.io/Arduino-IRremote/).
+Tutorials and more information are available on [the official homepage](http://z3t0.github.io/Arduino-IRremote/).
 
 ## Changes made:
 The IR receiver can now be turned on and off, using "irrecv.enableIRIn(true);" and "irrecv.enableIRIn(false);" instead of the library's default "irrecv.enableIRIn();".
