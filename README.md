@@ -13,9 +13,11 @@ This project is open source, licensed under the BSD 3-Clause "New" or "Revised" 
 
 A note on the IRremote.h library:
 The IR receiver can now be turned on and off, using:
-  irrecv.enableIRIn(true);
-  irrecv.enableIRIn(false);
-instead of the library's default
-  irrecv.enableIRIn();
+
+  "irrecv.enableIRIn(true);" and "irrecv.enableIRIn(false);"
+  
+instead of the library's default:
+
+  "irrecv.enableIRIn();"
   
 The reason for this is that any attempt to write to nvram while the IR receiver is turned on will send the ESP32 into a reboot loop. The code for the Muffsy Relay Input Selector turns off the IR receiver right before writing to nvram, and turns the IR receiver on again when the nvram write operation has ended.
