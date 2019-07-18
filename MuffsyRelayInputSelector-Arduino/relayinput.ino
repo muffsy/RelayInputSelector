@@ -320,7 +320,7 @@ void irRemote() { // Start irRemote function
     // Switch case to use the selected remote control button
     switch (results.value) { // Start switch/case
       
-      case 7770223: // Relay 1
+      case 16724175: // Relay 1
         {
           Serial.println("[http://muffsy.com]: Button \"1\"");
           if (powerState == 1) {
@@ -331,7 +331,7 @@ void irRemote() { // Start irRemote function
           break;
         }
 
-      case 7774303: // Relay 2
+      case 16718055: // Relay 2
         {
           Serial.println("[http://muffsy.com]: Button \"2\"");
           if (powerState == 1) {
@@ -342,7 +342,7 @@ void irRemote() { // Start irRemote function
           break;
         }
 
-      case 7766143: // Relay 3
+      case 16743045: // Relay 3
         {
           Serial.println("[http://muffsy.com]: Button \"3\"");
           if (powerState == 1) {
@@ -353,7 +353,7 @@ void irRemote() { // Start irRemote function
           break;
         }
 
-      case 7787053: // Relay 4
+      case 16716015: // Relay 4
         {
           Serial.println("[http://muffsy.com]: Button \"4\"");
           if (powerState == 1) {
@@ -364,7 +364,7 @@ void irRemote() { // Start irRemote function
           break;
         }
 
-      case 7748293: // Mute
+      case 16769565: // Mute
         {
           Serial.println("[http://muffsy.com]: Button \"Mute\"");
           if (powerState == 1) {
@@ -375,7 +375,7 @@ void irRemote() { // Start irRemote function
           break;
         }
 
-      case 7742173: // Channel UP
+      case 16754775: // Channel UP
         {
           Serial.println("[http://muffsy.com]: Button \"UP\"");
           if (powerState == 1) {
@@ -386,7 +386,7 @@ void irRemote() { // Start irRemote function
           break;
         }
 
-      case 7738093: // Channel DOWN
+      case 16769055: // Channel DOWN
         {
           Serial.println("[http://muffsy.com]: Button \"DOWN\"");
           if (powerState == 1) {
@@ -397,7 +397,7 @@ void irRemote() { // Start irRemote function
           break;
         }
 
-      case 7745743: // Power button
+      case 16753245: // Power button
         {
           Serial.println("[http://muffsy.com]: Button \"POWER\"");
           if (powerState == 1) {
