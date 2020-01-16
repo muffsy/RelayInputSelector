@@ -23,4 +23,4 @@ The PlatformIO folder is a fully self-contained project for the Muffsy Relay Inp
 
 Installing PlatformIO:
 
-https://platformio.org/install
+- https://platformio.org/install
