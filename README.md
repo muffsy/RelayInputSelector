@@ -1,6 +1,6 @@
 # Muffsy Relay Input Selector 4
 
-Arduino Code, Patched IRremote.h, Eagle project files
+This open source (BSD license) project contains Arduino Code, PlatformIO code, Patched IRremote.h, Autodesk Eagle PCB project files
 
 - https://www.muffsy.com/muffsy-relay-input-selector-4.html
 - https://www.tindie.com/products/skrodahl/muffsy-relay-input-selector-kit/
