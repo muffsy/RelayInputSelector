@@ -320,7 +320,7 @@ void irRemote() { // Start irRemote function
     // Switch case to use the selected remote control button
     switch (results.value) { // Start switch/case
       
-      case 16724175: // Relay 1
+      case 16724175: // Relay 1 - Input 1
         {
           Serial.println("[http://muffsy.com]: Button \"1\"");
           if (powerState == 1) {
@@ -331,7 +331,7 @@ void irRemote() { // Start irRemote function
           break;
         }
 
-      case 16718055: // Relay 2
+      case 16718055: // Relay 2 - Input 2
         {
           Serial.println("[http://muffsy.com]: Button \"2\"");
           if (powerState == 1) {
@@ -342,7 +342,7 @@ void irRemote() { // Start irRemote function
           break;
         }
 
-      case 16743045: // Relay 3
+      case 16743045: // Relay 3 - Input 3
         {
           Serial.println("[http://muffsy.com]: Button \"3\"");
           if (powerState == 1) {
@@ -353,7 +353,7 @@ void irRemote() { // Start irRemote function
           break;
         }
 
-      case 16716015: // Relay 4
+      case 16716015: // Relay 4 - Input 4
         {
           Serial.println("[http://muffsy.com]: Button \"4\"");
           if (powerState == 1) {
