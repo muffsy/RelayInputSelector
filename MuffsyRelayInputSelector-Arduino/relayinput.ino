@@ -311,7 +311,7 @@ void powerControl() {
 void irRemote() { // Start irRemote function
 
     // Decode the infrared input
-      // Decodes the infrared input
+    
   if (irrecv.decode(&results)) {
     long int decCode = results.value;
     Serial.print("[http://muffsy.com]: Received IR code: ");
