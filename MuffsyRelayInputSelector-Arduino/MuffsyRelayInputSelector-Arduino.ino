@@ -191,17 +191,6 @@ relayOff();
 digitalWrite(relays[localRelayCount], HIGH);
 relayCount = localRelayCount;
 
-    // Rollover 3 or 0
-//    if (relayCount > 3) {
-//      relayCount = 0;
-//    } else if (relayCount < 0) {
-//      relayCount = 3;
-//    }
-
-    // Turn off all relays, then turn on relayCount
-//    relayOff();
-//    digitalWrite(relays[relayCount], HIGH);
-
     // Write relayCount to memory
     EEPROM.write(0,relayCount);
     EEPROM.commit();
