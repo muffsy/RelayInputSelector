@@ -85,10 +85,10 @@ const byte IR_Recv = 36;
  int aPreviousState;  
 
  // Relay Array
- int relays[] = {16, 12, 27, 33, 32};
+ volatile int relays[] = {16, 12, 27, 33, 32};
 
  // Relay variables
- int relayCount;
+ volatile int relayCount;
  int previousRelay;
  int relayNumber;
 
@@ -177,17 +177,30 @@ void relayOn() {
   // If relayCount has changed: Turn on the selected relay (next, previous, direct)
   // If previousRelay has changed: Turn on the last selected relay
   if (relayCount != previousRelay) {
+    auto localRelayCount = relayCount; // local copy, assuming atomic integer
 
     // Rollover 3 or 0
-    if (relayCount > 3) {
-      relayCount = 0;
-    } else if (relayCount < 0) {
-      relayCount = 3;
+    if (localRelayCount > 3) {
+      localRelayCount = 0;
+    } else if (localRelayCount < 0) {
+      localRelayCount = 3;
     }
 
+// Turn off all relays, then turn on localRelayCount
+relayOff();
+digitalWrite(relays[localRelayCount], HIGH);
+relayCount = localRelayCount;
+
+    // Rollover 3 or 0
+//    if (relayCount > 3) {
+//      relayCount = 0;
+//    } else if (relayCount < 0) {
+//      relayCount = 3;
+//    }
+
     // Turn off all relays, then turn on relayCount
-    relayOff();
-    digitalWrite(relays[relayCount], HIGH);
+//    relayOff();
+//    digitalWrite(relays[relayCount], HIGH);
 
     // Write relayCount to memory
     EEPROM.write(0,relayCount);
