@@ -14,12 +14,5 @@ This project, including the schematic and board layout, is open source. It's lic
 **Update 2025-07-30:**
 The software now works without modifications of Arduino libraries.
 
-**PlatformIO now supported:**
-
-The PlatformIO folder is a fully self-contained project for the Muffsy Relay Input Selector. All dependencies are included, so there's no more need for installing the IRremote.h library manually.
-
-The code for PlatformIO has not yet been updated to reflect the update alleviating the need for modified libraries, use this cautiously until it's been updated.
-
-Installing PlatformIO:
-
-- https://platformio.org/install
+**Update 2025-09-16:**
+Much improved code, with user configurable values. In particular for the IR remote codes and rotary encoder direction.
