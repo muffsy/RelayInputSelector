@@ -223,7 +223,7 @@ void loop() {
   if (powerState == 0) {
     powerOn();
   } else if (powerState == 1){
-      relayOn();
+      relayOn();  // Will automatically change input if a function changes the relayCount variable
       irRemote(); // Allowing all functionality in the irRemote() function
   } else {
       irRemote(); // irRemote() function, using Power on/off only
