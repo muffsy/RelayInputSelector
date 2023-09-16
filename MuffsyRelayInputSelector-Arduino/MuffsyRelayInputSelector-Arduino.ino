@@ -68,8 +68,8 @@
  * If the repeat rate when holding down a button on the remote is
  * to slow or too fast, change this timer.
  *
- * Lower number: Higher repeat rate
- * Higher number: Lower repeat rate
+ * Lower number: Faster repeat rate
+ * Higher number: Slower repeat rate
  * Default: 350
  */
 #define irRate 350
