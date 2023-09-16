@@ -111,9 +111,9 @@
 #define tfuButton 67
 #define playButton 9
 
-/********************************************************
- * Do not edit below, unless you want to change the code!
- ********************************************************/
+/**********************************************************
+ * Do not edit below, unless you intend to change the code!
+ **********************************************************/
 
 // Rotary encoder pins
 #define clk 35  // (A3)
