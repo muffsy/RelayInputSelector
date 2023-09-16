@@ -36,6 +36,7 @@
  * Startup delay
  * When powering on, the input selector is muted to avoid any unwanted pops
  * Set the delay value in milliseconds (default 1500)
+ * Change to 0 for no delay
  */
 #define startupDelay 1500
 
