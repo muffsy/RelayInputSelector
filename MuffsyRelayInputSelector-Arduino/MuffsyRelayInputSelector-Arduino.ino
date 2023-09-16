@@ -311,7 +311,8 @@ void relayOn() {
     // If circuit is muted, unmute
     if (mute == 1) {
       digitalWrite(muteLed,HIGH);
-      Serial.println("[http://muffsy.com]: Waiting startupDelay milliseconds before turning off mute");
+      Serial.print("[http://muffsy.com]: Milliseconds delay before turning off mute: ");
+      Serial.println(startupDelay);
       delay(startupDelay);
       toggleMute();
     }
