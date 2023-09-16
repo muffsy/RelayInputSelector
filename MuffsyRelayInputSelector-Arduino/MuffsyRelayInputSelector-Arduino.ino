@@ -30,7 +30,7 @@
 
 #include <IRremote.h> // IR Remote Library
 #include <EEPROM.h> // EEPROM Library
-#include <Versatile_RotaryEncoder.h>
+#include <Versatile_RotaryEncoder.h> // Rotary Encoder Library
 
 /*
  * Startup delay
