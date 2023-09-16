@@ -342,12 +342,13 @@ void toggleMute() {
 void togglePower() {
   if (powerState == 1) { // Turning power OFF: All relays OFF, power amp OFF
     powerState = 2; // Setting powerState to 2 (off)
-    digitalWrite (SSR,LOW); // Turning off Solid State Relay
-    digitalWrite (LED,LOW); // Turning off the power LED
-    relayOff();
     if (mute == 0) {
       toggleMute();
     }
+    relayOff();
+    digitalWrite (SSR,LOW); // Turning off Solid State Relay
+    digitalWrite (LED,LOW); // Turning off the power LED
+    digitalWrite(muteLed,LOW); // Turning off the mute LED, don't want it on when powered off.
 
     Serial.println("[http://muffsy.com]: Solid State Relay OFF");
     Serial.println("[http://muffsy.com]: Power OFF\n");
