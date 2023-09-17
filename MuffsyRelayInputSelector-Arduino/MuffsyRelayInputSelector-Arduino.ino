@@ -89,27 +89,27 @@
  * There are placeholder commands in the function irRemote{} for the buttons
  * 0 and 5 to 9 that serves as templates for your own IR routines
  */
-#define zeroButton 13       // Placeholder command in the function irRemote{}
-#define oneButton 12        // Input 1
-#define twoButton 24        // Input 2
-#define threeButton 94      // Input 3
-#define fourButton 8        // Input 4
-#define fiveButton 28       // Placeholder command in the function irRemote{}
-#define sixButton 90        // Placeholder command in the function irRemote{}
-#define sevenButton 66      // Placeholder command in the function irRemote{}
-#define eightButton 82      // Placeholder command in the function irRemote{}
-#define nineButton 74       // Placeholder command in the function irRemote{}
-#define eqButton 70
-#define modeButton 68
-#define muteButton 71       // Mute
-#define ffButton 21         // "Fast Forward" button: Channel up
-#define rewButton 7         // "Rewind" button: Channel down
-#define powerButton 69      // Power on / off
-#define volupButton 25
-#define voldownButton 22
-#define rptButton 64
-#define tfuButton 67
-#define playButton 9
+#define zeroButton 13       // Placeholder command in the function irRemote{}, default: 13
+#define oneButton 12        // Input 1, default: 12
+#define twoButton 24        // Input 2, default: 24
+#define threeButton 94      // Input 3, default: 94
+#define fourButton 8        // Input 4, default: 8
+#define fiveButton 28       // Placeholder command in the function irRemote{}, default: 28
+#define sixButton 90        // Placeholder command in the function irRemote{}, default: 90
+#define sevenButton 66      // Placeholder command in the function irRemote{}, default: 66
+#define eightButton 82      // Placeholder command in the function irRemote{}, default: 82
+#define nineButton 74       // Placeholder command in the function irRemote{}, default: 74
+#define eqButton 70         // Default value: 70
+#define modeButton 68       // Default value: 68
+#define muteButton 71       // Mute, default: 71
+#define ffButton 21         // "Fast Forward" button: Channel up, default: 21
+#define rewButton 7         // "Rewind" button: Channel down, default: 7
+#define powerButton 69      // Power on / off, default: 69
+#define volupButton 25      // Default value: 25
+#define voldownButton 22    // Default value: 22
+#define rptButton 64        // Default value: 64
+#define tfuButton 67        // Default value: 67
+#define playButton 9        // Default value: 9
 
 /**********************************************************
  * Do not edit below, unless you intend to change the code!
