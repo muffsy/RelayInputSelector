@@ -62,15 +62,15 @@
  #define encDirection 0
 
 /* 
- * Rotary encoder rate
+ * Rotational encoder rate
  *
- * Delay between registering rotary encoder turns, in milliseconds.
- * If the repeat rate when turning the rotary encoder is too fast, change this timer.
+ * Delay between registering rotational encoder turns, in milliseconds.
+ * If the repeat rate when turning the rotational encoder is too fast, change this timer.
  *
  * Note:
- * Introducing a delay in reading turns of the rotary encoder may skip one or more of the encoder's "clicks". 
- * A delay prevents you from skipping channels if you turn the encoder to fast.
- * Default is 0 (no delay), a usable value would be in the 50-75 ms range.
+ * Introducing a delay in reading turns of the rotational encoder may skip one or more
+ * of the encoders "clicks". In turn, it prevents you from skipping channels if you turn
+ * the encoder to fast.
  *
  * Lower number: Faster repeat rate
  * Higher number: Slower repeat rate
@@ -91,7 +91,8 @@
  */
 #define irRate 125
 
-/* IR Commands
+/*
+ *IR Commands
  *
  * The following variables map all the buttons on the remote
  * control that comes with the Muffsy Input Selector.
@@ -558,8 +559,8 @@ void irRemote() { // Start irRemote function
           } */
       }// End switch/case
 
-      unsigned long prMillis = millis();
-      while (millis() - prMillis < irRate) {
+      unsigned long irMillis = millis();
+      while (millis() - irMillis < irRate) {
         ;  
       }
   
@@ -573,7 +574,7 @@ void irRemote() { // Start irRemote function
  ******/
 
 void handleRotate(int8_t rotation) {
-  Serial.print("[http://muffsy.com]: Rotary encoder turned ");
+  Serial.print("[http://muffsy.com]: Rotational encoder turned ");
 
   // encDirection set to 0
   if ( ((rotation > 0) && (encDirection == 0)) || ((rotation < 0) && (encDirection == 1)) ) { // Channel down (counter-clockwise)
@@ -598,7 +599,7 @@ void handleRotate(int8_t rotation) {
     } else {
       Serial.println("[http://muffsy.com]: Powered off, doing nothing...\n"); // Powered off
     } 
-  } // End encDirection set to 0
+  }
 
   unsigned long rotMillis = millis();
   while (millis() - rotMillis < rotRate) {
