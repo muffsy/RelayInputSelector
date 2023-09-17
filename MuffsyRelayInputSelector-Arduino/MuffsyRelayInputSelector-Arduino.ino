@@ -4,7 +4,7 @@
  *  Control external power to amp using IR and push button
  *  http://muffsy.com
  *
- * Last updated:2023-09-16
+ * Last updated: 2023-09-17
  */
 
 /*
