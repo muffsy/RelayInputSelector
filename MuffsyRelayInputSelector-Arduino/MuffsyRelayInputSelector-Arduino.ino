@@ -62,6 +62,23 @@
  #define encDirection 0
 
 /* 
+ * Rotary encoder rate
+ *
+ * Delay between registering rotary encoder turns, in milliseconds.
+ * If the repeat rate when turning the rotary encoder is too fast, change this timer.
+ *
+ * Note:
+ * Introducing a delay in reading turns of the rotary encoder may skip one or more of the encoder's "clicks". 
+ * A delay prevents you from skipping channels if you turn the encoder to fast.
+ * Default is 0 (no delay), a usable value would be in the 50-75 ms range.
+ *
+ * Lower number: Faster repeat rate
+ * Higher number: Slower repeat rate
+ * Default: 0
+ */
+#define rotRate 0
+
+/* 
  * IR rate
  *
  * Delay between registering IR commands, in milliseconds.
@@ -556,7 +573,7 @@ void irRemote() { // Start irRemote function
  ******/
 
 void handleRotate(int8_t rotation) {
-  Serial.print("[http://muffsy.com]: Rotational encoder turned ");
+  Serial.print("[http://muffsy.com]: Rotary encoder turned ");
 
   // encDirection set to 0
   if ( ((rotation > 0) && (encDirection == 0)) || ((rotation < 0) && (encDirection == 1)) ) { // Channel down (counter-clockwise)
@@ -583,6 +600,10 @@ void handleRotate(int8_t rotation) {
     } 
   } // End encDirection set to 0
 
+  unsigned long rotMillis = millis();
+  while (millis() - rotMillis < rotRate) {
+    ;  
+  }
 } // End handleRotate()
 
 
