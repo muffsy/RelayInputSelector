@@ -70,9 +70,9 @@
  *
  * Lower number: Faster repeat rate
  * Higher number: Slower repeat rate
- * Default: 350
+ * Default: 125
  */
-#define irRate 350
+#define irRate 125
 
 /* IR Commands
  *
