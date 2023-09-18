@@ -55,7 +55,7 @@
  * If you want to use a Solid State Relay to control mains power to an
  * amplifier or similar, set this value to 1
  *
- * Default 0 (disabled)
+ * Default 0 (disabled), as handling mains power is dangerous
  */
  #define enableSSR 0
 
