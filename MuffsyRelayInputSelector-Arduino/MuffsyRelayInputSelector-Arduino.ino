@@ -44,9 +44,20 @@
  *
  * When powering on, the input selector is muted to avoid any unwanted pops
  * Set the delay value in milliseconds (default 1500)
+ *
  * Change to 0 for no delay
  */
 #define startupDelay 1500
+
+/*
+ * Enable SSR
+ *
+ * If you want to use a Solid State Relay to control mains power to an
+ * amplifier or similar, set this value to 1
+ *
+ * Default 0 (disabled)
+ */
+ #define enableSSR 0
 
 /* Mute and Power on / off:
  *
@@ -379,7 +390,9 @@ void togglePower() {
       toggleMute();
     }
     relayOff();
-    digitalWrite (SSR,LOW); // Turning off Solid State Relay
+    //if (enableSSR == 1) { // Only turn off SSR if "enableSSR" is set to 1 (not yet implemented)
+      digitalWrite (SSR,LOW); // Turning off Solid State Relay
+    //}
     digitalWrite (LED,LOW); // Turning off the power LED
     digitalWrite(muteLed,LOW); // Turning off the mute LED, don't want it on when powered off.
 
@@ -388,7 +401,9 @@ void togglePower() {
           
   } else if (powerState == 2) { // Turning power ON: Last selected relay ON, power amp (Solid State Relay) ON
     powerState = 1; // Setting powerState to 1 (on)
-    digitalWrite (SSR,HIGH); // Turning on Solid State Relay
+    //if (enableSSR == 1) { // Only enable SSR if "enableSSR" is set to 1 (not yet implemented)
+      digitalWrite (SSR,HIGH); // Turning on Solid State Relay
+    //}
     digitalWrite (LED,HIGH); // Turning on the power lED
     previousRelay = relayCount + 1; // Trigger relayOn()
     mute = 1; // Trigger toggleMute()
