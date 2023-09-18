@@ -34,6 +34,7 @@
 
 /*
  * Startup delay
+ *
  * When powering on, the input selector is muted to avoid any unwanted pops
  * Set the delay value in milliseconds (default 1500)
  * Change to 0 for no delay
@@ -55,7 +56,6 @@
 /* 
  * Rotary encoder direction.
  *
- * Options 0 or 1
  * If the rotary encoder rotation is the wrong way around, change this value to 1
  * Default: 0
  */
@@ -97,7 +97,8 @@
  * The following variables map all the buttons on the remote
  * control that comes with the Muffsy Input Selector.
  *
- * Replace these commands with your own if you want to use another remote.
+ * For instructions on how to configure your own remote, see:
+ * https://www.muffsy.com/muffsy-relay-input-selector-4#configureremote
  *
  * While connecting your Input Selector to the computer, it will display
  * any remote commands in the Arduiono IDE's Serial Monitor like this:
@@ -106,6 +107,7 @@
  *
  * There are placeholder commands in the function irRemote{} for the buttons
  * 0 and 5 to 9 that serves as templates for your own IR routines
+ *
  */
 #define zeroButton 13       // Placeholder command in the function irRemote{}, default: 13
 #define oneButton 12        // Input 1, default: 12
@@ -204,7 +206,7 @@ void setup() {
   // versatile_encoder->setShortPressDuration(35);  // set 35 ms as short press duration (default is 50 ms)
   // versatile_encoder->setLongPressDuration(550);  // set 550 ms as long press duration (default is 1000 ms)
 
-  // Make sure theinputs aren't touch enabled
+  // Make sure the inputs aren't touch enabled
   pinMode (sw,INPUT_PULLUP);
   pinMode (clk,INPUT_PULLDOWN);
   pinMode (dt,INPUT_PULLDOWN);
@@ -360,6 +362,9 @@ void toggleMute() {
   }
 } // End toggleMute()
 
+/*
+ * Power on / off
+ */
 void togglePower() {
   if (powerState == 1) { // Turning power OFF: All relays OFF, power amp OFF
     powerState = 2; // Setting powerState to 2 (off)
@@ -374,7 +379,7 @@ void togglePower() {
     Serial.println("[http://muffsy.com]: Solid State Relay OFF");
     Serial.println("[http://muffsy.com]: Power OFF\n");
           
-  } else if (powerState == 2) { // Turning power ON: Last selected relay ON, power amp ON
+  } else if (powerState == 2) { // Turning power ON: Last selected relay ON, power amp (Solid State Relay) ON
     powerState = 1; // Setting powerState to 1 (on)
     digitalWrite (SSR,HIGH); // Turning on Solid State Relay
     digitalWrite (LED,HIGH); // Turning on the power lED
@@ -569,10 +574,11 @@ void irRemote() { // Start irRemote function
   } // End of if IrReceiver decode
 } // End irRemote() 
 
-/******
- * Rotary Encoder Functions
- ******/
-
+/*
+ * Rotate the rotary encoder
+ *
+ * Change the encDirection value if you want to reverse the direction
+ */
 void handleRotate(int8_t rotation) {
   Serial.print("[http://muffsy.com]: Rotational encoder turned ");
 
@@ -609,7 +615,10 @@ void handleRotate(int8_t rotation) {
 
 
 /*
- * Press rotary encoder button. Will turn on or off the Muffsy Input selector when the button is released.
+ * Press rotary encoder button.
+ *
+ * Will turn on or off the Muffsy Input selector when the button is released,
+ * or mute if you have changed the encPush value and the powerState is 1 (on)
  */
 void handlePressRelease() {
   if (encPush == 0) { // Power off
@@ -626,7 +635,10 @@ void handlePressRelease() {
 } // End handlePressRelease()
 
 /*
- * Long press the rotary encoder button. It will mute or unmute, as long as powerState is 1 (on)
+ * Long press the rotary encoder button.
+ *
+ * It will mute or unmute, as long as powerState is 1 (on),
+ * or power on/off if you have changed the encPush value
  */
 void handleLongPress() {
   if (encPush == 1) { // Power off
