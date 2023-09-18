@@ -15,14 +15,14 @@
  *   Print startup message
  *   powerState is changed to 2 (off)
  *
-   2: Powered OFF
+   2: Power OFF
  *   Turn off all relays
  *   Set power amp to off (SSR = LOW)
  *   The input selector is muted, and mute LED is turned off
  *   Limited functionality, only IR powerbutton and rotary encoder pushbutton is active
  *   All input events, even those not available, will be shown in the serial monitor
  *        
- * 1: Powered ON
+ * 1: Power ON
  *   Turn on power button LED
  *   Set power amp to on, SSR = HIGH
  *   Activates the input channel read from NVRAM
