@@ -1,31 +1,35 @@
 /* Muffsy Relay Input Selector
  *      
- *  Control relays using IR and rotary encoder
- *  Control external power to amp using IR and push button
- *  http://muffsy.com
+ * Control relays using IR and rotary encoder
+ * Control external power to amp using IR and push button
+ * http://muffsy.com
  *
- * Last updated: 2023-09-17
- */
-
-/*
- * powerState:
+ * Last update with functionality changes: 2023-09-17
+ *
+ * Introduction:
+ * The software works on the concept of "powerState", which determines the behavior of the Input Selector:
  * 
- *   0: Boot
- *     Read last input channel from NVRAM, selecting the same input as when the input selector was turned off or lost power 
- *     Print startup message
+ * 0: Boot
+ *   Read last input channel from NVRAM, selecting the same input as when the input selector was turned off or lost power 
+ *   The input selector is muted, and mute LED is turned off 
+ *   Print startup message
+ *   powerState is changed to 2 (off)
+ *
+   2: Powered OFF
+ *   Turn off all relays
+ *   Set power amp to off (SSR = LOW)
+ *   The input selector is muted, and mute LED is turned off
+ *   Limited functionality, only IR powerbutton and rotary encoder pushbutton is active
+ *   All input events, even those not available, will be shown in the serial monitor
  *        
- *   1: Powered ON
- *     Turn on power button LED
- *     Set power amp to on, SSR = HIGH
- *     Activates the input channel read from NVRAM
- *     Will start muted with mute LED turned on
- *     No actions are read until the input selector unmutes after 1500 ms (default)
- *     All functions available, IR Remote and rotary encoder
- *       
- *    2: Powered OFF
- *     Turn off all relays
- *     Set power amp to off (SSR = LOW)
- *     The input selector is muted, but mute LED is turned off 
+ * 1: Powered ON
+ *   Turn on power button LED
+ *   Set power amp to on, SSR = HIGH
+ *   Activates the input channel read from NVRAM
+ *   Will start muted with mute LED turned on
+ *   No actions are read until the input selector unmutes after 1500 ms (default)
+ *   All functions available, IR Remote and rotary encoder
+ *   All input events and actions will be shown in the serial monitor
  */
 
 /*
