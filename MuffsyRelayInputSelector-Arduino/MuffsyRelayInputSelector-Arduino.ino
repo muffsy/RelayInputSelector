@@ -28,8 +28,11 @@
  *     The input selector is muted, but mute LED is turned off 
  */
 
-#include <IRremote.h> // IR Remote Library
+/*
+ * Load libraries
+ */
 #include <EEPROM.h> // EEPROM Library
+#include <IRremote.h> // IR Remote Library
 #include <Versatile_RotaryEncoder.h> // Rotary Encoder Library
 
 /*
