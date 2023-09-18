@@ -50,7 +50,7 @@
 #define startupDelay 1500
 
 /*
- * Enable SSR
+ * Enable SSR (not yet implemented)
  *
  * If you want to use a Solid State Relay to control mains power to an
  * amplifier or similar, set this value to 1
