@@ -105,9 +105,9 @@
  *
  * Lower number: Faster repeat rate
  * Higher number: Slower repeat rate
- * Default: 125
+ * Default: 150
  */
-#define irRate 125
+#define irRate 150
 
 /*
  *IR Commands
@@ -206,13 +206,14 @@ int relayNumber;
  */
 
 // Power/Mute variables
-int powerState = 0; // Power ready-state
-int mute = 0; // Mute on/off (1/0)
+int powerState = 0;   // Power ready-state
+int mute = 1;         // Mute off/on (0/1) -> Start muted
+int poweronMute = 1;  // Mute at poweron, with startupDelay
 
 
 void setup() {
 
-    Serial.begin(115200);
+  Serial.begin(115200); // Set serial monitor transfer rate to 115,000
 	versatile_encoder = new Versatile_RotaryEncoder(clk, dt, sw);
 
   // Load to the rotary encoder functions
@@ -258,22 +259,16 @@ void setup() {
  ******/
 
 void loop() {
-  if (powerState == 0) {
+  if (powerState == 0) { // Booting, welcome message
     powerOn();
-  } else if (powerState == 1){
-      relayOn();  // Will automatically change input if a function changes the relayCount variable
-      irRemote(); // Allowing all functionality in the irRemote() function
-  } else {
-      irRemote(); // irRemote() function, using Power on/off only
+  } else if (powerState == 1){ // Powered on
+      relayOn();    // Will automatically change input if a function changes the relayCount variable
+      irRemote();   // Allowing all functionality in the irRemote() function
+      rotEncoder(); // Read the rotaryencoder 
+  } else { // Powered off
+      irRemote();   // irRemote() function, react to Power on/off only
+      rotEncoder(); // Read the rotaryencoder, react to Power on/off only
   }
-
-    // Do the encoder reading and processing
-    /*if (versatile_encoder->ReadEncoder()) {
-        // Do something here whenever an encoder action is read
-    }*/
-
-  // Read the rotary encoder
-  versatile_encoder->ReadEncoder();
 
 } // End Main loop
 
@@ -297,7 +292,6 @@ void powerOn() { // Only called if powerState is 0 (Ready-status)
   digitalWrite (SSR,LOW);
   Serial.println(" ** Startup completed - waiting for Power ON\n");
   Serial.println("       -------------------------\n");
-    
   // Set powerState to 2 (Powered off). This function will not run again.
   powerState = 2;
 } // End powerOn()
@@ -347,15 +341,19 @@ void relayOn() {
     Serial.println(relayNumber);
     Serial.println();
 
-    // If circuit is muted, unmute
-    if ((mute == 1) && (startupDelay == 0)) {
+    // Unmute if just powered on
+    if ((poweronMute == 1) && (startupDelay == 0)) {
+      poweronMute = 0; // Set poweronMute to 0, so this mutedelay doesn't occur every time the circuit is muted
+      mute = 0; // toggleMute will unmute
       toggleMute;
-    } else if (mute == 1) {
+    } else if (poweronMute == 1) {
+      poweronMute = 0; // Set poweronMute to 0, so this mutedelay doesn't occur every time the circuit is muted
       Serial.println("[http://muffsy.com]: Turning on mute LED");
       digitalWrite(muteLed,HIGH);
       Serial.print("[http://muffsy.com]: Milliseconds delay before turning off mute: ");
       Serial.println(startupDelay);
       delay(startupDelay);
+      mute = 0; // toggleMute will unmute when called next
       toggleMute();
     }
   }
@@ -365,57 +363,93 @@ void relayOn() {
  * Mute activate/deactivate
  */
 void toggleMute() {
-  // Call the mute function (toggleMute();), it will mute if unmuted and vice versa.
-  if (mute == 0) {
+  // This function will mute if unmuted, and vice versa everytime it's called
+  if (mute == 1) { // Read mute variable. if unmuted, turn on mute
     Serial.println("[http://muffsy.com]: Mute relay turned ON");
     digitalWrite(relays[4],LOW);
-    if (powerState == 1){
+
+    if (powerState == 1){ // If powered on, also turn on mute LED
       Serial.println("[http://muffsy.com]: Turning on mute LED\n");
       digitalWrite(muteLed,HIGH);
-    }
-    mute = 1;
-  } else {
+
+      // Set mute to 0, next time toggleMute is called, it will turn OFF mute
+      // mute = 0 now means we're muted
+      mute = 0;
+    } // End if powered on
+
+  } else { // Mute must be 0, turn off mute
     Serial.println("[http://muffsy.com]: Mute relay turned OFF");
     digitalWrite(relays[4],HIGH);
     Serial.println("[http://muffsy.com]: Turning off mute LED\n");
-    digitalWrite(muteLed,LOW);
-    mute = 0;
-  }
+    digitalWrite(muteLed,LOW); // Turn off mute LED, no matter if it was turned on or off earlier.
+
+    // Set mute to 1, next time toggleMute is called, it will turn ON mute
+    // mute = 1 now means we're unmuted
+    mute = 1; 
+  } // 
 } // End toggleMute()
 
 /*
  * Power on / off
  */
 void togglePower() {
-  if (powerState == 1) { // Turning power OFF: All relays OFF, power amp OFF
+
+  /*
+   * If powerState is 1, turn OFF: All relays OFF, power amp OFF
+   */
+  if (powerState == 1) {
     powerState = 2; // Setting powerState to 2 (off)
-    if (mute == 0) {
-      toggleMute();
+
+    if (mute == 1) { // If unmuted, turn on mute 
+      toggleMute(); // mute variable = 1, toggleMute will turn on mute. powerState = 2, mute LED will not turn on
+    } else if (mute == 0) { // If already muted, turn off mute LED
+      Serial.println("[http://muffsy.com]: Mute relay stays turned ON");
+      Serial.println("[http://muffsy.com]: Turning off mute LED");
+      digitalWrite(muteLed,LOW); // Turning off the mute LED
     }
+    
     relayOff();
     if (enableSSR == 1) { // Only turn off SSR if "enableSSR" is set to 1
       digitalWrite (SSR,LOW); // Turning off Solid State Relay
       Serial.println("[http://muffsy.com]: Solid State Relay OFF");
     }
-    digitalWrite (LED,LOW); // Turning off the power LED
-    digitalWrite(muteLed,LOW); // Turning off the mute LED, don't want it on when powered off.
 
+    Serial.println("[http://muffsy.com]: Turning off power LED");
     Serial.println("[http://muffsy.com]: Power OFF\n");
-          
-  } else if (powerState == 2) { // Turning power ON: Last selected relay ON, power amp (Solid State Relay) ON
+    digitalWrite (LED,LOW); // Turning off the power LED
+    poweronMute = 1; // Set poweronMute to 1, this will force a mute with delay on next power on
+
+  /*
+   * If powerState is 2, turn ON: Last selected relay ON, power amp (Solid State Relay ON)
+   */
+  } else if (powerState == 2) { // 
     powerState = 1; // Setting powerState to 1 (on)
+    Serial.println("[http://muffsy.com]: Turning on power LED");
+    digitalWrite (LED,HIGH); // Turning on the power lED
+    previousRelay = relayCount + 1; // Trigger relayOn()
     Serial.println("[http://muffsy.com]: Power ON");
+
     if (enableSSR == 1) { // Only enable SSR if "enableSSR" is set to 1
       digitalWrite (SSR,HIGH); // Turning on Solid State Relay
       Serial.println("[http://muffsy.com]: Solid State Relay ON\n");
     }
-    digitalWrite (LED,HIGH); // Turning on the power lED
-    previousRelay = relayCount + 1; // Trigger relayOn()
-    mute = 1; // Trigger toggleMute()
+
+    // We have just powered on
+    // The circuit is muted, but not through toggleMute
+    // mute = 0; tells toggleMute that we are muted.
+    // relayOn() will call toggleMute if poweronMute = 1
+    mute = 0;
     relayOn();
 
   } 
 } // End togglePower()
+
+/*
+ * Read the rotary encoder
+ */
+void rotEncoder() {
+  versatile_encoder->ReadEncoder();
+}
 
 /*
  * IR Remote
