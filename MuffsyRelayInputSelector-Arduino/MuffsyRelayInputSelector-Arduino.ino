@@ -4,7 +4,7 @@
  * Control external power to amp using IR and push button
  * http://muffsy.com
  *
- * Last update with functionality changes: 2023-09-17
+ * Last update with functionality changes: 2023-09-19
  *
  * Introduction:
  * The software works on the concept of "powerState", which determines the behavior of the Input Selector:
