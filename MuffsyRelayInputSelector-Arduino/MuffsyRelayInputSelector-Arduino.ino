@@ -50,7 +50,7 @@
 #define startupDelay 1500
 
 /*
- * Enable SSR (not yet implemented)
+ * Enable SSR
  *
  * If you want to use a Solid State Relay to control mains power to an
  * amplifier or similar, set this value to 1
@@ -351,6 +351,7 @@ void relayOn() {
     if ((mute == 1) && (startupDelay == 0)) {
       toggleMute;
     } else if (mute == 1) {
+      Serial.println("[http://muffsy.com]: Turning on mute LED");
       digitalWrite(muteLed,HIGH);
       Serial.print("[http://muffsy.com]: Milliseconds delay before turning off mute: ");
       Serial.println(startupDelay);
@@ -366,15 +367,17 @@ void relayOn() {
 void toggleMute() {
   // Call the mute function (toggleMute();), it will mute if unmuted and vice versa.
   if (mute == 0) {
-    Serial.println("[http://muffsy.com]: Mute relay turned ON\n");
+    Serial.println("[http://muffsy.com]: Mute relay turned ON");
     digitalWrite(relays[4],LOW);
     if (powerState == 1){
+      Serial.println("[http://muffsy.com]: Turning on mute LED\n");
       digitalWrite(muteLed,HIGH);
     }
     mute = 1;
   } else {
-    Serial.println("[http://muffsy.com]: Mute relay turned OFF\n");
+    Serial.println("[http://muffsy.com]: Mute relay turned OFF");
     digitalWrite(relays[4],HIGH);
+    Serial.println("[http://muffsy.com]: Turning off mute LED\n");
     digitalWrite(muteLed,LOW);
     mute = 0;
   }
@@ -390,26 +393,27 @@ void togglePower() {
       toggleMute();
     }
     relayOff();
-    //if (enableSSR == 1) { // Only turn off SSR if "enableSSR" is set to 1 (not yet implemented)
+    if (enableSSR == 1) { // Only turn off SSR if "enableSSR" is set to 1
       digitalWrite (SSR,LOW); // Turning off Solid State Relay
-    //}
+      Serial.println("[http://muffsy.com]: Solid State Relay OFF");
+    }
     digitalWrite (LED,LOW); // Turning off the power LED
     digitalWrite(muteLed,LOW); // Turning off the mute LED, don't want it on when powered off.
 
-    Serial.println("[http://muffsy.com]: Solid State Relay OFF");
     Serial.println("[http://muffsy.com]: Power OFF\n");
           
   } else if (powerState == 2) { // Turning power ON: Last selected relay ON, power amp (Solid State Relay) ON
     powerState = 1; // Setting powerState to 1 (on)
-    //if (enableSSR == 1) { // Only enable SSR if "enableSSR" is set to 1 (not yet implemented)
+    Serial.println("[http://muffsy.com]: Power ON");
+    if (enableSSR == 1) { // Only enable SSR if "enableSSR" is set to 1
       digitalWrite (SSR,HIGH); // Turning on Solid State Relay
-    //}
+      Serial.println("[http://muffsy.com]: Solid State Relay ON\n");
+    }
     digitalWrite (LED,HIGH); // Turning on the power lED
     previousRelay = relayCount + 1; // Trigger relayOn()
     mute = 1; // Trigger toggleMute()
     relayOn();
-    Serial.println("[http://muffsy.com]: Power ON");
-    Serial.println("[http://muffsy.com]: Solid State Relay ON\n");
+
   } 
 } // End togglePower()
 
