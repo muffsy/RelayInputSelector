@@ -199,21 +199,28 @@ int previousRelay;
 int relayNumber;
 
 /*
- * powerStates:
- * 0: Powering on
- * 1: Powered on
- * 2: Powered off
+ * Power/Mute variables
+ *
+ * powerState explained in detail at the beginning of this program:
+ *  0 = Welcome message, getting ready
+ *  1 = Powered on
+ *  2 = Powered off
+ *
+ * mute:
+ *  0: Tell toggleMute() to unmute
+ *  1: Tell toggleMute() to mute
+ *
+ * poweronMute:
+ *  1: mute for the period defined by startupDelay, then unmute, only when powering on (change powerState to 1)
+ *  0: Disable the startupDelay if powerState is unchanged
  */
-
-// Power/Mute variables
 int powerState = 0;   // Power ready-state
-int mute = 1;         // Mute off/on (0/1) -> Start muted
+int mute = 1;         // Mute off/on (0/1) -> The circuit starts out muted, tell toggleMute() to stay muted at first run
 int poweronMute = 1;  // Mute at poweron, with startupDelay
-
 
 void setup() {
 
-  Serial.begin(115200); // Set serial monitor transfer rate to 115,000
+  Serial.begin(115200); // Set serial monitor transfer rate to 115,200
 	versatile_encoder = new Versatile_RotaryEncoder(clk, dt, sw);
 
   // Load to the rotary encoder functions
@@ -225,12 +232,13 @@ void setup() {
   // versatile_encoder->setShortPressDuration(35);  // set 35 ms as short press duration (default is 50 ms)
   // versatile_encoder->setLongPressDuration(550);  // set 550 ms as long press duration (default is 1000 ms)
 
-  // Make sure the inputs aren't touch enabled
+  // Define INPUT pins, make sure the inputs aren't touch enabled
   pinMode (sw,INPUT_PULLUP);
   pinMode (clk,INPUT_PULLDOWN);
   pinMode (dt,INPUT_PULLDOWN);
   pinMode (IR_Recv,INPUT_PULLUP);
 
+  // Define OUTPUT pins
   // Onboard LED
   pinMode (LED,OUTPUT);
 
@@ -261,10 +269,12 @@ void setup() {
 void loop() {
   if (powerState == 0) { // Booting, welcome message
     powerOn();
+
   } else if (powerState == 1){ // Powered on
       relayOn();    // Will automatically change input if a function changes the relayCount variable
       irRemote();   // Allowing all functionality in the irRemote() function
       rotEncoder(); // Read the rotaryencoder 
+
   } else { // Powered off
       irRemote();   // irRemote() function, react to Power on/off only
       rotEncoder(); // Read the rotaryencoder, react to Power on/off only
@@ -285,13 +295,16 @@ void powerOn() { // Only called if powerState is 0 (Ready-status)
   Serial.print(" ** Reading saved relay state from NVRAM: ");
   Serial.println(relayCount);
   digitalWrite(relays[4],LOW);
+
   Serial.println("\n ** Mute Relay turned ON");
   Serial.println(" ** All input relays are turned OFF");
   relayOff();
+
   Serial.println(" ** Solid State Relay is turned OFF\n");
   digitalWrite (SSR,LOW);
   Serial.println(" ** Startup completed - waiting for Power ON\n");
   Serial.println("       -------------------------\n");
+
   // Set powerState to 2 (Powered off). This function will not run again.
   powerState = 2;
 } // End powerOn()
@@ -307,7 +320,12 @@ void relayOff() {
 
 
  /*
-  * Turn on current relay
+  * Turn on or off input relays (mute relay is controlled by toggleMute())
+  *
+  * relayCount is the actual chosen active relay
+  * previousRelay is the previous chosen active relay
+  * This function is triggered if the two are unequal
+  * The function can be forced to trigger by changing previousRelay: previousRelay = relayCount + 1;
   */
 void relayOn() {
   // If relayCount has changed: Turn on the selected relay (next, previous, direct)
@@ -315,7 +333,11 @@ void relayOn() {
   if (relayCount != previousRelay) {
     auto localRelayCount = relayCount; // local copy, assuming atomic integer
 
-    // Rollover 3 or 0
+    /* Rollover 3 or 0, 
+     *
+     * There are four input relays, 0 to 3 (Status messages prints them as inputs 1 to 4)
+     * This part makes sure we can't choose relays lower than 0 or higher than 3
+     */
     if (localRelayCount > 3) {
       localRelayCount = 0;
     } else if (localRelayCount < 0) {
@@ -341,11 +363,16 @@ void relayOn() {
     Serial.println(relayNumber);
     Serial.println();
 
-    // Unmute if just powered on
+    /* 
+     * Mute, then unmute if just powered on
+     * relayOn() is called at power on, placing the startupDelay mute here is convenient so we don't have to run a separate function
+     * If the configurable value startupMute is 0, there will be no delay
+     */
     if ((poweronMute == 1) && (startupDelay == 0)) {
       poweronMute = 0; // Set poweronMute to 0, so this mutedelay doesn't occur every time the circuit is muted
       mute = 0; // toggleMute will unmute
       toggleMute;
+
     } else if (poweronMute == 1) {
       poweronMute = 0; // Set poweronMute to 0, so this mutedelay doesn't occur every time the circuit is muted
       Serial.println("[http://muffsy.com]: Turning on mute LED");
@@ -374,7 +401,7 @@ void toggleMute() {
 
       // Set mute to 0, next time toggleMute is called, it will turn OFF mute
       // mute = 0 now means we're muted
-      mute = 0;
+      mute = 0; // Unmute next time this function is called
     } // End if powered on
 
   } else { // Mute must be 0, turn off mute
@@ -385,7 +412,7 @@ void toggleMute() {
 
     // Set mute to 1, next time toggleMute is called, it will turn ON mute
     // mute = 1 now means we're unmuted
-    mute = 1; 
+    mute = 1; // Mute next time this function is called
   } // 
 } // End toggleMute()
 
@@ -435,8 +462,8 @@ void togglePower() {
     }
 
     // We have just powered on
-    // The circuit is muted, but not through toggleMute
-    // mute = 0; tells toggleMute that we are muted.
+    // The circuit is muted, manually in powerOn(), toggleMute() has not been involved to set the mute variable
+    // mute = 0; tells toggleMute() that we are muted, and that toggleMute() will unmute the next time it's called
     // relayOn() will call toggleMute if poweronMute = 1
     mute = 0;
     relayOn();
@@ -466,6 +493,7 @@ void irRemote() { // Start irRemote function
       Serial.println(decCode);
     }
     // Read pushed remote control button and take action
+    // All actions for remote control buttons are defined here
       switch (decCode) { // Start switch/case
       
         case oneButton: // Relay 1 - Input 1
@@ -667,6 +695,8 @@ void handleRotate(int8_t rotation) {
     } 
   }
 
+  // Wait for the amount of milliseconds defined by rotRate until reading the next IR command
+  // This delay uses interrupts, so it won't hold up the rest of the program
   unsigned long rotMillis = millis();
   while (millis() - rotMillis < rotRate) {
     ;  
@@ -684,10 +714,12 @@ void handlePressRelease() {
   if (encPush == 0) { // Power off
   	Serial.println("[http://muffsy.com]: Button \"Power\"");
     togglePower();
+
   } else { // Mute
     Serial.println("[http://muffsy.com]: Button \"Mute\"");
    if (powerState == 1) {
       toggleMute();
+
    } else {
       Serial.println("[http://muffsy.com]: Powered off, doing nothing...\n");
     }
@@ -704,10 +736,12 @@ void handleLongPress() {
   if (encPush == 1) { // Power off
     Serial.println("[http://muffsy.com]: Button \"Power\"");
     togglePower();
+
   } else { // Mute
     Serial.println("[http://muffsy.com]: Button \"Mute\"");
    if (powerState == 1) {
       toggleMute();
+
    } else {
       Serial.println("[http://muffsy.com]: Powered off, doing nothing...\n");
     }
