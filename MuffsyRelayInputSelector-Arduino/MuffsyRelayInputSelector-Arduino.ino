@@ -4,7 +4,7 @@
  * Control external power to amp using IR and push button
  * http://muffsy.com
  *
- * Last update with functionality changes: 2023-09-19
+ * Last update with functionality changes: 2023-09-27
  *
  * Introduction:
  * The software works on the concept of "powerState", which determines the behavior of the Input Selector:
@@ -643,6 +643,11 @@ void irRemote() { // Start irRemote function
           {
             Serial.println("[http://muffsy.com]: Button \"POWER\"");
             togglePower();
+	    unsigned long powMillis = millis();
+	    // Always wait a bit longer after powerButton to avoid turning on immediately after power off, regardless of irRate
+            while (millis() - powMillis < 750) { 
+              ;  
+            }
             break;
           }
 
