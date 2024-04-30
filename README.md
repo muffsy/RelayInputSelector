@@ -7,7 +7,9 @@ This open source (BSD license) project contains Arduino Code, Autodesk Eagle PCB
 
 The Muffsy Relay Input Selector is a simple, reliable, high quality, DIY stereo input selector that's controlled by an ESP-32 and is slightly larger than a Post-IT note. 
 
-The Input Selector has four inputs, one output, a mute circuit and the option of controlling a solid state relay. It's controlled with a rotary encoder and an IR remote. As the heart of the Input Selector is an ESP32, with all pins broken out on the board, the possibilities are virtually limitles. The example code is written in Arduino, the native SDK could of course be used instead.
+The Input Selector has four inputs, one output, a mute circuit and the option of controlling a solid state relay. It's controlled with a rotary encoder and an IR remote. 
+
+As the heart of the Input Selector is an ESP32, with all pins broken out on the board, the possibilities are virtually limitles. The example code is written in Arduino, the native SDK could of course be used instead.
 
 This kit is meant to be paired with a preamplifier circuit, such as the Muffsy BSTRD Class-A Tube Preamp, Pass Labs B1 and many others.
 
