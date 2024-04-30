@@ -13,7 +13,7 @@ As the heart of the Input Selector is an ESP32, with all pins broken out on the 
 
 This kit is meant to be paired with a preamplifier circuit, such as the Muffsy BSTRD Class-A Tube Preamp, Pass Labs B1 and many others.
 
-This project, including the schematic and board layout, is open source. It's licensed under the very permissive BSD 3-Clause "New" or "Revised" License.
+**This project**, including the schematic and board layout, **is open source**. It's licensed under the very permissive BSD 3-Clause "New" or "Revised" License.
 
 **Update 2023-07-30:**
 The software now works without modifications of Arduino libraries.
