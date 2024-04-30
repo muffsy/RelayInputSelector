@@ -11,8 +11,8 @@ This kit is meant to be paired with a preamplifier circuit, such as the Muffsy B
 
 This project, including the schematic and board layout, is open source. It's licensed under the very permissive BSD 3-Clause "New" or "Revised" License.
 
-**Update 2025-07-30:**
+**Update 2023-07-30:**
 The software now works without modifications of Arduino libraries.
 
-**Update 2025-09-16:**
+**Update 2023-09-16:**
 Much improved code, with user configurable values. In particular for the IR remote codes and rotary encoder direction.
