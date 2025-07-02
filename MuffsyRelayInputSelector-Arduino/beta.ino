@@ -1,11 +1,10 @@
 /*
  * BETA-version: UNTESTED!
- *
- * Muffsy Relay Input Selector - Enhanced Version
- * 
+* 
  * Features:
  * - WiFi AP setup with web interface
  * - OTA updates
+ * - Web-based console
  * - Clean modular code structure
  * - Persistent settings storage
  * 
@@ -75,6 +74,12 @@ DNSServer dnsServer;
 Preferences prefs;
 Versatile_RotaryEncoder encoder(ENCODER_CLK, ENCODER_DT, ENCODER_SW);
 
+// Web console buffer
+#define CONSOLE_BUFFER_SIZE 50
+String consoleBuffer[CONSOLE_BUFFER_SIZE];
+int consoleIndex = 0;
+bool consoleWrapped = false;
+
 // System state
 struct SystemState {
   bool powered = false;
@@ -114,12 +119,18 @@ void processIR();
 void processEncoder();
 void processWebRequests();
 
+// Console functions
+void addToConsole(String message);
+void serialPrintln(String message);
+
 // Web interface handlers
 void handleRoot();
 void handleWiFiSetup();
 void handleWiFiConnect();
 void handleStatus();
 void handleControl();
+void handleConsole();
+void handleConsoleData();
 void handleOTAUpload();
 void handleNotFound();
 
@@ -130,9 +141,9 @@ void setup() {
   Serial.begin(115200);
   delay(1000);
   
-  Serial.println("\n" + String(FIRMWARE_VERSION));
-  Serial.println("Muffsy Relay Input Selector - Enhanced");
-  Serial.println("=====================================");
+  serialPrintln("\n" + String(FIRMWARE_VERSION));
+  serialPrintln("Muffsy Relay Input Selector - Enhanced");
+  serialPrintln("=====================================");
   
   setupHardware();
   loadSettings();
@@ -143,7 +154,7 @@ void setup() {
   setupEncoder();
   
   // Startup sequence - device starts OFF and MUTED for safety
-  Serial.println("Startup delay: " + String(STARTUP_DELAY) + "ms (safety mute period)");
+  serialPrintln("Startup delay: " + String(STARTUP_DELAY) + "ms (safety mute period)");
   delay(STARTUP_DELAY);
   
   // Device remains off and muted until user explicitly turns it on
@@ -152,7 +163,7 @@ void setup() {
   updateRelays();
   
   setupComplete = true;
-  Serial.println("Setup complete - ready for operation");
+  serialPrintln("Setup complete - ready for operation");
 }
 
 void loop() {
@@ -166,7 +177,7 @@ void loop() {
     if (!state.apMode && WiFi.status() != WL_CONNECTED) {
       static unsigned long lastReconnectAttempt = 0;
       if (millis() - lastReconnectAttempt > 30000) { // Try every 30 seconds
-        Serial.println("WiFi disconnected, attempting reconnection...");
+        serialPrintln("WiFi disconnected, attempting reconnection...");
         WiFi.reconnect();
         lastReconnectAttempt = millis();
       }
@@ -179,7 +190,7 @@ void loop() {
 // SETUP FUNCTIONS
 // ================================
 void setupHardware() {
-  Serial.println("Initializing hardware...");
+  serialPrintln("Initializing hardware...");
   
   // Initialize relay pins
   pinMode(RELAY_INPUT_A, OUTPUT);
@@ -211,15 +222,15 @@ void setupHardware() {
   state.powered = false;           // Start powered off for safety
   
   updateLEDs();
-  Serial.println("Hardware initialized");
+  serialPrintln("Hardware initialized");
 }
 
 void setupWiFi() {
-  Serial.println("Setting up WiFi...");
+  serialPrintln("Setting up WiFi...");
   
   if (state.wifiSSID.length() > 0) {
     // Try to connect to saved network
-    Serial.println("Attempting to connect to saved network: " + state.wifiSSID);
+    serialPrintln("Attempting to connect to saved network: " + state.wifiSSID);
     WiFi.begin(state.wifiSSID.c_str(), state.wifiPassword.c_str());
     
     int attempts = 0;
@@ -232,14 +243,14 @@ void setupWiFi() {
     if (WiFi.status() == WL_CONNECTED) {
       state.wifiConnected = true;
       state.apMode = false;
-      Serial.println("\nConnected to WiFi!");
-      Serial.println("IP address: " + WiFi.localIP().toString());
+      serialPrintln("\nConnected to WiFi!");
+      serialPrintln("IP address: " + WiFi.localIP().toString());
       return;
     }
   }
   
   // Start AP mode if no saved network or connection failed
-  Serial.println("Starting Access Point mode...");
+  serialPrintln("Starting Access Point mode...");
   WiFi.mode(WIFI_AP);
   WiFi.softAP(AP_SSID, AP_PASSWORD);
   
@@ -248,19 +259,21 @@ void setupWiFi() {
   
   state.apMode = true;
   state.wifiConnected = false;
-  Serial.println("AP started");
-  Serial.println("SSID: " + String(AP_SSID));
-  Serial.println("IP: " + WiFi.softAPIP().toString());
+  serialPrintln("AP started");
+  serialPrintln("SSID: " + String(AP_SSID));
+  serialPrintln("IP: " + WiFi.softAPIP().toString());
 }
 
 void setupWebServer() {
-  Serial.println("Setting up web server...");
+  serialPrintln("Setting up web server...");
   
   server.on("/", handleRoot);
   server.on("/wifi", handleWiFiSetup);
   server.on("/connect", HTTP_POST, handleWiFiConnect);
   server.on("/status", handleStatus);
   server.on("/control", HTTP_POST, handleControl);
+  server.on("/console", handleConsole);
+  server.on("/console-data", handleConsoleData);
   server.on("/update", HTTP_GET, handleOTAUpload);
   server.on("/update", HTTP_POST, []() {
     server.send(200, "text/plain", (Update.hasError()) ? "FAIL" : "OK");
@@ -287,22 +300,22 @@ void setupWebServer() {
   
   server.onNotFound(handleNotFound);
   server.begin();
-  Serial.println("Web server started");
+  serialPrintln("Web server started");
 }
 
 void setupOTA() {
-  Serial.println("Setting up OTA...");
+  serialPrintln("Setting up OTA...");
   
   ArduinoOTA.setHostname("muffsy-input-selector");
   ArduinoOTA.setPassword("muffsy");
   
   ArduinoOTA.onStart([]() {
     String type = (ArduinoOTA.getCommand() == U_FLASH) ? "sketch" : "filesystem";
-    Serial.println("Start updating " + type);
+    serialPrintln("Start updating " + type);
   });
   
   ArduinoOTA.onEnd([]() {
-    Serial.println("\nEnd");
+    serialPrintln("\nOTA Update completed");
   });
   
   ArduinoOTA.onProgress([](unsigned int progress, unsigned int total) {
@@ -310,26 +323,27 @@ void setupOTA() {
   });
   
   ArduinoOTA.onError([](ota_error_t error) {
-    Serial.printf("Error[%u]: ", error);
-    if (error == OTA_AUTH_ERROR) Serial.println("Auth Failed");
-    else if (error == OTA_BEGIN_ERROR) Serial.println("Begin Failed");
-    else if (error == OTA_CONNECT_ERROR) Serial.println("Connect Failed");
-    else if (error == OTA_RECEIVE_ERROR) Serial.println("Receive Failed");
-    else if (error == OTA_END_ERROR) Serial.println("End Failed");
+    String errorMsg = "Error[" + String(error) + "]: ";
+    if (error == OTA_AUTH_ERROR) errorMsg += "Auth Failed";
+    else if (error == OTA_BEGIN_ERROR) errorMsg += "Begin Failed";
+    else if (error == OTA_CONNECT_ERROR) errorMsg += "Connect Failed";
+    else if (error == OTA_RECEIVE_ERROR) errorMsg += "Receive Failed";
+    else if (error == OTA_END_ERROR) errorMsg += "End Failed";
+    serialPrintln(errorMsg);
   });
   
   ArduinoOTA.begin();
-  Serial.println("OTA ready");
+  serialPrintln("OTA ready");
 }
 
 void setupIR() {
-  Serial.println("Setting up IR receiver...");
+  serialPrintln("Setting up IR receiver...");
   IrReceiver.begin(IR_RECEIVE_PIN, ENABLE_LED_FEEDBACK);
-  Serial.println("IR receiver ready");
+  serialPrintln("IR receiver ready");
 }
 
 void setupEncoder() {
-  Serial.println("Setting up rotary encoder...");
+  serialPrintln("Setting up rotary encoder...");
   encoder.setHandleRotate([](int8_t rotation) {
     if (millis() - lastEncoderAction > DEBOUNCE_DELAY) {
       int newInput = state.currentInput + rotation;
@@ -352,11 +366,11 @@ void setupEncoder() {
     handleMuteToggle();
   });
   
-  Serial.println("Encoder ready");
+  serialPrintln("Encoder ready");
 }
 
 void loadSettings() {
-  Serial.println("Loading settings...");
+  serialPrintln("Loading settings...");
   prefs.begin("muffsy", false);
   
   state.currentInput = prefs.getInt("input", 1);
@@ -364,7 +378,7 @@ void loadSettings() {
   state.wifiSSID = prefs.getString("wifi_ssid", "");
   state.wifiPassword = prefs.getString("wifi_pass", "");
   
-  Serial.println("Settings loaded");
+  serialPrintln("Settings loaded");
 }
 
 void saveSettings() {
@@ -375,12 +389,41 @@ void saveSettings() {
 }
 
 // ================================
+// CONSOLE FUNCTIONS
+// ================================
+void addToConsole(String message) {
+  // Add timestamp
+  unsigned long now = millis();
+  unsigned long seconds = now / 1000;
+  unsigned long minutes = seconds / 60;
+  unsigned long hours = minutes / 60;
+  
+  String timestamp = String(hours % 24) + ":" + 
+                    String((minutes % 60) < 10 ? "0" : "") + String(minutes % 60) + ":" +
+                    String((seconds % 60) < 10 ? "0" : "") + String(seconds % 60);
+  
+  String logEntry = "[" + timestamp + "] " + message;
+  
+  consoleBuffer[consoleIndex] = logEntry;
+  consoleIndex = (consoleIndex + 1) % CONSOLE_BUFFER_SIZE;
+  
+  if (consoleIndex == 0) {
+    consoleWrapped = true;
+  }
+}
+
+void serialPrintln(String message) {
+  Serial.println(message);    // Still output to serial
+  addToConsole(message);      // Also add to web console buffer
+}
+
+// ================================
 // CONTROL FUNCTIONS
 // ================================
 void handleInputSelection(int input) {
   if (input >= 1 && input <= 4 && state.powered) {
     state.currentInput = input;
-    Serial.println("Input selected: " + String(input));
+    serialPrintln("Input selected: " + String(input));
     updateRelays();
     updateLEDs();
     saveSettings();
@@ -389,7 +432,7 @@ void handleInputSelection(int input) {
 
 void handlePowerToggle() {
   state.powered = !state.powered;
-  Serial.println("Power: " + String(state.powered ? "ON" : "OFF"));
+  serialPrintln("Power: " + String(state.powered ? "ON" : "OFF"));
   
   if (!state.powered) {
     state.muted = true; // Mute when powering off
@@ -402,7 +445,7 @@ void handlePowerToggle() {
 void handleMuteToggle() {
   if (state.powered) {
     state.muted = !state.muted;
-    Serial.println("Mute: " + String(state.muted ? "ON" : "OFF"));
+    serialPrintln("Mute: " + String(state.muted ? "ON" : "OFF"));
     updateRelays();
     updateLEDs();
   }
@@ -454,7 +497,7 @@ void processIR() {
   if (IrReceiver.decode()) {
     if (millis() - lastIRCommand > DEBOUNCE_DELAY) {
       uint32_t command = IrReceiver.decodedIRData.command;
-      Serial.println("IR received: 0x" + String(command, HEX));
+      serialPrintln("IR received: 0x" + String(command, HEX));
       
       switch (command) {
         case IR_POWER:
@@ -575,6 +618,11 @@ void handleRoot() {
 
   html += R"(
         <div class="section">
+            <h2>Console</h2>
+            <p><a href="/console" target="_blank" class="btn-primary" style="text-decoration: none; display: inline-block; padding: 10px 15px; border-radius: 5px;">Open Console</a></p>
+        </div>
+        
+        <div class="section">
             <h2>Firmware Update</h2>
             <form method="POST" action="/update" enctype="multipart/form-data">
                 <input type="file" name="update" accept=".bin">
@@ -670,6 +718,210 @@ void handleControl() {
   } else {
     server.send(400, "text/plain", "Missing action");
   }
+}
+
+void handleConsole() {
+  String html = R"(
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Muffsy Console</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body { 
+            font-family: 'Courier New', monospace; 
+            margin: 0; 
+            padding: 20px; 
+            background: #1e1e1e; 
+            color: #00ff00;
+        }
+        .console-container { 
+            max-width: 1000px; 
+            margin: 0 auto; 
+            background: #000; 
+            border: 2px solid #333; 
+            border-radius: 10px; 
+            padding: 20px;
+        }
+        .console-header {
+            color: #00ffff;
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+        }
+        .console-output {
+            height: 500px;
+            overflow-y: auto;
+            background: #000;
+            border: 1px solid #333;
+            padding: 10px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        .console-line {
+            margin-bottom: 2px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .timestamp {
+            color: #888;
+        }
+        .controls {
+            margin-top: 10px;
+            text-align: center;
+        }
+        button {
+            background: #333;
+            color: #00ff00;
+            border: 1px solid #666;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        button:hover {
+            background: #555;
+        }
+        .status-bar {
+            margin-top: 10px;
+            padding: 10px;
+            background: #222;
+            border-radius: 5px;
+            color: #888;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="console-container">
+        <div class="console-header">
+            <h1>🎵 Muffsy Input Selector - Console</h1>
+        </div>
+        
+        <div class="console-output" id="console">
+            <div class="console-line">Loading console...</div>
+        </div>
+        
+        <div class="controls">
+            <button onclick="toggleAutoRefresh()">Auto Refresh: <span id="refresh-status">ON</span></button>
+            <button onclick="clearConsole()">Clear</button>
+            <button onclick="refreshConsole()">Refresh Now</button>
+            <button onclick="window.close()">Close</button>
+        </div>
+        
+        <div class="status-bar">
+            Last updated: <span id="last-update">Never</span> | 
+            Lines: <span id="line-count">0</span> |
+            Auto-refresh: <span id="refresh-interval">2s</span>
+        </div>
+    </div>
+
+    <script>
+        let autoRefresh = true;
+        let refreshTimer;
+        
+        function updateConsole() {
+            fetch('/console-data')
+                .then(response => response.json())
+                .then(data => {
+                    const console = document.getElementById('console');
+                    console.innerHTML = '';
+                    
+                    data.lines.forEach(line => {
+                        const div = document.createElement('div');
+                        div.className = 'console-line';
+                        div.textContent = line;
+                        console.appendChild(div);
+                    });
+                    
+                    // Auto-scroll to bottom
+                    console.scrollTop = console.scrollHeight;
+                    
+                    // Update status
+                    document.getElementById('last-update').textContent = new Date().toLocaleTimeString();
+                    document.getElementById('line-count').textContent = data.lines.length;
+                })
+                .catch(error => {
+                    console.error('Failed to fetch console data:', error);
+                });
+        }
+        
+        function toggleAutoRefresh() {
+            autoRefresh = !autoRefresh;
+            document.getElementById('refresh-status').textContent = autoRefresh ? 'ON' : 'OFF';
+            
+            if (autoRefresh) {
+                startAutoRefresh();
+            } else {
+                clearInterval(refreshTimer);
+            }
+        }
+        
+        function startAutoRefresh() {
+            refreshTimer = setInterval(updateConsole, 2000);
+        }
+        
+        function clearConsole() {
+            fetch('/console-data?clear=1')
+                .then(() => updateConsole());
+        }
+        
+        function refreshConsole() {
+            updateConsole();
+        }
+        
+        // Start auto-refresh
+        updateConsole();
+        startAutoRefresh();
+    </script>
+</body>
+</html>
+)";
+
+  server.send(200, "text/html", html);
+}
+
+void handleConsoleData() {
+  // Handle clear request
+  if (server.hasArg("clear")) {
+    consoleIndex = 0;
+    consoleWrapped = false;
+    for (int i = 0; i < CONSOLE_BUFFER_SIZE; i++) {
+      consoleBuffer[i] = "";
+    }
+    serialPrintln("Console cleared via web interface");
+  }
+  
+  // Build JSON response with console lines
+  String json = "{\"lines\":[";
+  
+  int lineCount = 0;
+  if (consoleWrapped) {
+    // If wrapped, start from current index (oldest) and go around
+    for (int i = 0; i < CONSOLE_BUFFER_SIZE; i++) {
+      int idx = (consoleIndex + i) % CONSOLE_BUFFER_SIZE;
+      if (consoleBuffer[idx].length() > 0) {
+        if (lineCount > 0) json += ",";
+        json += "\"" + consoleBuffer[idx] + "\"";
+        lineCount++;
+      }
+    }
+  } else {
+    // If not wrapped, just go from 0 to current index
+    for (int i = 0; i < consoleIndex; i++) {
+      if (consoleBuffer[i].length() > 0) {
+        if (lineCount > 0) json += ",";
+        json += "\"" + consoleBuffer[i] + "\"";
+        lineCount++;
+      }
+    }
+  }
+  
+  json += "],\"count\":" + String(lineCount) + "}";
+  
+  server.send(200, "application/json", json);
 }
 
 void handleOTAUpload() {
