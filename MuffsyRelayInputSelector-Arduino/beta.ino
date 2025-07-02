@@ -1,8 +1,6 @@
 /*
  * BETA-version: UNTESTED!
  * Will compile for NodeMCU-32S in Arduino IDE
- *
- * Muffsy Relay Input Selector - Enhanced Version
  * 
  * Features:
  * - WiFi AP setup with web interface
@@ -573,14 +571,15 @@ void handleRoot() {
   html += ".btn-warning { background: #ffc107; color: black; }";
   html += ".btn-danger { background: #dc3545; color: white; }";
   html += ".section { margin-bottom: 30px; }";
-  html += "h1 { color: #333; text-align: center; margin-bottom: 30px; display: flex; align-items: center; justify-content: center; gap: 15px; }";
-  html += ".logo { height: 60px; width: auto; }";
+  html += "h1 { color: #333; text-align: center; margin-bottom: 30px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: 400; line-height: 1.2; }";
+  html += ".muffsy-brand { font-size: 36px; color: #333; font-weight: 400; display: block; }";
+  html += ".product-name { font-size: 34px; color: #666; font-weight: 300; display: block; }";
   html += "h2 { color: #333; border-bottom: 2px solid #007bff; padding-bottom: 10px; }";
   html += ".wifi-setup { background: #fff3cd; padding: 15px; border-radius: 5px; margin-bottom: 20px; }";
   html += "input[type=\"text\"], input[type=\"password\"] { width: 100%; padding: 10px; margin: 5px 0; border: 1px solid #ddd; border-radius: 3px; }";
   html += "</style></head><body>";
   html += "<div class=\"container\">";
-  html += "<h1><img src=\"https://www.muffsy.com/blogs/post/The-Muffsy-Logo\" alt=\"Muffsy Logo\" class=\"logo\" onerror=\"this.style.display='none';\">Muffsy Input Selector</h1>";
+  html += "<h1><span class=\"muffsy-brand\">muffsy</span><span class=\"product-name\">Input Selector</span></h1>";
   html += "<div class=\"status\">";
   html += "<strong>Status:</strong> <span id=\"power\">Loading...</span><br>";
   html += "<strong>Input:</strong> <span id=\"input\">Loading...</span><br>";
