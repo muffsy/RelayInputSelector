@@ -142,9 +142,12 @@ void setup() {
   setupIR();
   setupEncoder();
   
-  // Startup sequence
+  // Startup sequence - device starts OFF and MUTED for safety
+  Serial.println("Startup delay: " + String(STARTUP_DELAY) + "ms (safety mute period)");
   delay(STARTUP_DELAY);
-  state.muted = false;
+  
+  // Device remains off and muted until user explicitly turns it on
+  // This ensures no audio signals pass through during startup
   updateLEDs();
   updateRelays();
   
@@ -194,11 +197,18 @@ void setupHardware() {
   pinMode(INPUT_C_LED, OUTPUT);
   pinMode(INPUT_D_LED, OUTPUT);
   
-  // Set initial states
-  digitalWrite(RELAY_MUTE, HIGH);  // Start muted
-  digitalWrite(SSR_PIN, LOW);
-  state.muted = true;
-  state.powered = true;
+  // Set initial states - SAFETY FIRST!
+  digitalWrite(RELAY_MUTE, HIGH);  // Start muted (relay OFF = muted)
+  digitalWrite(SSR_PIN, LOW);      // SSR off
+  
+  // Turn off all input relays immediately
+  digitalWrite(RELAY_INPUT_A, LOW);
+  digitalWrite(RELAY_INPUT_B, LOW);
+  digitalWrite(RELAY_INPUT_C, LOW);
+  digitalWrite(RELAY_INPUT_D, LOW);
+  
+  state.muted = true;              // Always start muted
+  state.powered = false;           // Start powered off for safety
   
   updateLEDs();
   Serial.println("Hardware initialized");
