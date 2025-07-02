@@ -1,6 +1,9 @@
 /*
  * BETA-version: UNTESTED!
-* 
+ * Will compile for NodeMCU-32S in Arduino IDE
+ *
+ * Muffsy Relay Input Selector - Enhanced Version
+ * 
  * Features:
  * - WiFi AP setup with web interface
  * - OTA updates
@@ -554,112 +557,90 @@ void processWebRequests() {
 // WEB INTERFACE HANDLERS
 // ================================
 void handleRoot() {
-  String html = R"(
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Muffsy Input Selector</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        body { font-family: Arial; margin: 20px; background: #f0f0f0; }
-        .container { max-width: 600px; margin: 0 auto; background: white; padding: 20px; border-radius: 10px; }
-        .status { background: #e7f3ff; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
-        .controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin-bottom: 20px; }
-        button { padding: 15px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; }
-        .btn-primary { background: #007bff; color: white; }
-        .btn-success { background: #28a745; color: white; }
-        .btn-warning { background: #ffc107; color: black; }
-        .btn-danger { background: #dc3545; color: white; }
-        .btn-active { background: #17a2b8; color: white; }
-        .section { margin-bottom: 30px; }
-        h2 { color: #333; border-bottom: 2px solid #007bff; padding-bottom: 10px; }
-        .wifi-setup { background: #fff3cd; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
-        input[type="text"], input[type="password"] { width: 100%; padding: 10px; margin: 5px 0; border: 1px solid #ddd; border-radius: 3px; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>🎵 Muffsy Input Selector</h1>
-        <div class="status">
-            <strong>Status:</strong> <span id="power">Loading...</span><br>
-            <strong>Input:</strong> <span id="input">Loading...</span><br>
-            <strong>Muted:</strong> <span id="mute">Loading...</span><br>
-            <strong>WiFi:</strong> <span id="wifi">Loading...</span>
-        </div>
-        
-        <div class="section">
-            <h2>Controls</h2>
-            <div class="controls">
-                <button class="btn-primary" onclick="sendCommand('power')">Power</button>
-                <button class="btn-warning" onclick="sendCommand('mute')">Mute</button>
-                <button class="btn-success" onclick="sendCommand('input', 1)">Input 1</button>
-                <button class="btn-success" onclick="sendCommand('input', 2)">Input 2</button>
-                <button class="btn-success" onclick="sendCommand('input', 3)">Input 3</button>
-                <button class="btn-success" onclick="sendCommand('input', 4)">Input 4</button>
-            </div>
-        </div>
-)";
+  String html = "<!DOCTYPE html><html><head>";
+  html += "<title>Muffsy Input Selector</title>";
+  html += "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">";
+  html += "<style>";
+  html += "body { font-family: Arial; margin: 20px; background: #f0f0f0; }";
+  html += ".container { max-width: 600px; margin: 0 auto; background: white; padding: 20px; border-radius: 10px; }";
+  html += ".status { background: #e7f3ff; padding: 15px; border-radius: 5px; margin-bottom: 20px; }";
+  html += ".controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin-bottom: 20px; }";
+  html += ".input-controls { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 10px; margin-top: 10px; }";
+  html += ".main-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }";
+  html += "button { padding: 15px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; }";
+  html += ".btn-primary { background: #007bff; color: white; }";
+  html += ".btn-success { background: #28a745; color: white; }";
+  html += ".btn-warning { background: #ffc107; color: black; }";
+  html += ".btn-danger { background: #dc3545; color: white; }";
+  html += ".section { margin-bottom: 30px; }";
+  html += "h1 { color: #333; text-align: center; margin-bottom: 30px; display: flex; align-items: center; justify-content: center; gap: 15px; }";
+  html += ".logo { height: 60px; width: auto; }";
+  html += "h2 { color: #333; border-bottom: 2px solid #007bff; padding-bottom: 10px; }";
+  html += ".wifi-setup { background: #fff3cd; padding: 15px; border-radius: 5px; margin-bottom: 20px; }";
+  html += "input[type=\"text\"], input[type=\"password\"] { width: 100%; padding: 10px; margin: 5px 0; border: 1px solid #ddd; border-radius: 3px; }";
+  html += "</style></head><body>";
+  html += "<div class=\"container\">";
+  html += "<h1><img src=\"https://www.muffsy.com/blogs/post/The-Muffsy-Logo\" alt=\"Muffsy Logo\" class=\"logo\" onerror=\"this.style.display='none';\">Muffsy Input Selector</h1>";
+  html += "<div class=\"status\">";
+  html += "<strong>Status:</strong> <span id=\"power\">Loading...</span><br>";
+  html += "<strong>Input:</strong> <span id=\"input\">Loading...</span><br>";
+  html += "<strong>Muted:</strong> <span id=\"mute\">Loading...</span><br>";
+  html += "<strong>WiFi:</strong> <span id=\"wifi\">Loading...</span>";
+  html += "</div>";
+  html += "<div class=\"section\">";
+  html += "<h2>Controls</h2>";
+  html += "<div class=\"main-controls\">";
+  html += "<button class=\"btn-primary\" onclick=\"sendCommand('power')\">Power</button>";
+  html += "<button class=\"btn-warning\" onclick=\"sendCommand('mute')\">Mute</button>";
+  html += "</div>";
+  html += "<div class=\"input-controls\">";
+  html += "<button class=\"btn-success\" onclick=\"sendCommand('input', 1)\">Input 1</button>";
+  html += "<button class=\"btn-success\" onclick=\"sendCommand('input', 2)\">Input 2</button>";
+  html += "<button class=\"btn-success\" onclick=\"sendCommand('input', 3)\">Input 3</button>";
+  html += "<button class=\"btn-success\" onclick=\"sendCommand('input', 4)\">Input 4</button>";
+  html += "</div></div>";
 
   if (state.apMode) {
-    html += R"(
-        <div class="section">
-            <h2>WiFi Setup</h2>
-            <div class="wifi-setup">
-                <p>Connect to your WiFi network for remote access and OTA updates.</p>
-                <form action="/connect" method="post">
-                    <input type="text" name="ssid" placeholder="WiFi Network Name" required>
-                    <input type="password" name="password" placeholder="WiFi Password">
-                    <button type="submit" class="btn-primary">Connect</button>
-                </form>
-            </div>
-        </div>
-)";
+    html += "<div class=\"section\">";
+    html += "<h2>WiFi Setup</h2>";
+    html += "<div class=\"wifi-setup\">";
+    html += "<p>Connect to your WiFi network for remote access and OTA updates.</p>";
+    html += "<form action=\"/connect\" method=\"post\">";
+    html += "<input type=\"text\" name=\"ssid\" placeholder=\"WiFi Network Name\" required>";
+    html += "<input type=\"password\" name=\"password\" placeholder=\"WiFi Password\">";
+    html += "<button type=\"submit\" class=\"btn-primary\">Connect</button>";
+    html += "</form></div></div>";
   }
 
-  html += R"(
-        <div class="section">
-            <h2>Console</h2>
-            <p><a href="/console" target="_blank" class="btn-primary" style="text-decoration: none; display: inline-block; padding: 10px 15px; border-radius: 5px;">Open Console</a></p>
-        </div>
-        
-        <div class="section">
-            <h2>Firmware Update</h2>
-            <form method="POST" action="/update" enctype="multipart/form-data">
-                <input type="file" name="update" accept=".bin">
-                <button type="submit" class="btn-danger">Upload Firmware</button>
-            </form>
-        </div>
-    </div>
-
-    <script>
-        function updateStatus() {
-            fetch('/status')
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('power').textContent = data.powered ? 'ON' : 'OFF';
-                    document.getElementById('input').textContent = 'Input ' + data.currentInput;
-                    document.getElementById('mute').textContent = data.muted ? 'YES' : 'NO';
-                    document.getElementById('wifi').textContent = data.wifiConnected ? 'Connected' : 'Not Connected';
-                });
-        }
-        
-        function sendCommand(action, value = null) {
-            const data = new FormData();
-            data.append('action', action);
-            if (value !== null) data.append('value', value);
-            
-            fetch('/control', {
-                method: 'POST',
-                body: data
-            }).then(() => updateStatus());
-        }
-        
-        updateStatus();
-        setInterval(updateStatus, 2000);
-    </script>
-</body>
-</html>
-)";
+  html += "<div class=\"section\">";
+  html += "<h2>Console</h2>";
+  html += "<p><a href=\"/console\" target=\"_blank\" class=\"btn-primary\" style=\"text-decoration: none; display: inline-block; padding: 10px 15px; border-radius: 5px;\">Open Console</a></p>";
+  html += "</div>";
+  html += "<div class=\"section\">";
+  html += "<h2>Firmware Update</h2>";
+  html += "<form method=\"POST\" action=\"/update\" enctype=\"multipart/form-data\">";
+  html += "<input type=\"file\" name=\"update\" accept=\".bin\">";
+  html += "<button type=\"submit\" class=\"btn-danger\">Upload Firmware</button>";
+  html += "</form></div></div>";
+  
+  html += "<script>";
+  html += "function updateStatus() {";
+  html += "fetch('/status').then(response => response.json()).then(data => {";
+  html += "document.getElementById('power').textContent = data.powered ? 'ON' : 'OFF';";
+  html += "document.getElementById('input').textContent = 'Input ' + data.currentInput;";
+  html += "document.getElementById('mute').textContent = data.muted ? 'YES' : 'NO';";
+  html += "document.getElementById('wifi').textContent = data.wifiConnected ? 'Connected' : 'Not Connected';";
+  html += "});";
+  html += "}";
+  html += "function sendCommand(action, value) {";
+  html += "const data = new FormData();";
+  html += "data.append('action', action);";
+  html += "if (value !== null && value !== undefined) data.append('value', value);";
+  html += "fetch('/control', { method: 'POST', body: data }).then(() => updateStatus());";
+  html += "}";
+  html += "updateStatus();";
+  html += "setInterval(updateStatus, 2000);";
+  html += "</script></body></html>";
 
   server.send(200, "text/html", html);
 }
@@ -721,164 +702,64 @@ void handleControl() {
 }
 
 void handleConsole() {
-  String html = R"(
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Muffsy Console</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        body { 
-            font-family: 'Courier New', monospace; 
-            margin: 0; 
-            padding: 20px; 
-            background: #1e1e1e; 
-            color: #00ff00;
-        }
-        .console-container { 
-            max-width: 1000px; 
-            margin: 0 auto; 
-            background: #000; 
-            border: 2px solid #333; 
-            border-radius: 10px; 
-            padding: 20px;
-        }
-        .console-header {
-            color: #00ffff;
-            text-align: center;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #333;
-            padding-bottom: 10px;
-        }
-        .console-output {
-            height: 500px;
-            overflow-y: auto;
-            background: #000;
-            border: 1px solid #333;
-            padding: 10px;
-            font-size: 14px;
-            line-height: 1.4;
-        }
-        .console-line {
-            margin-bottom: 2px;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-        }
-        .timestamp {
-            color: #888;
-        }
-        .controls {
-            margin-top: 10px;
-            text-align: center;
-        }
-        button {
-            background: #333;
-            color: #00ff00;
-            border: 1px solid #666;
-            padding: 10px 20px;
-            margin: 0 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-family: inherit;
-        }
-        button:hover {
-            background: #555;
-        }
-        .status-bar {
-            margin-top: 10px;
-            padding: 10px;
-            background: #222;
-            border-radius: 5px;
-            color: #888;
-            text-align: center;
-        }
-    </style>
-</head>
-<body>
-    <div class="console-container">
-        <div class="console-header">
-            <h1>🎵 Muffsy Input Selector - Console</h1>
-        </div>
-        
-        <div class="console-output" id="console">
-            <div class="console-line">Loading console...</div>
-        </div>
-        
-        <div class="controls">
-            <button onclick="toggleAutoRefresh()">Auto Refresh: <span id="refresh-status">ON</span></button>
-            <button onclick="clearConsole()">Clear</button>
-            <button onclick="refreshConsole()">Refresh Now</button>
-            <button onclick="window.close()">Close</button>
-        </div>
-        
-        <div class="status-bar">
-            Last updated: <span id="last-update">Never</span> | 
-            Lines: <span id="line-count">0</span> |
-            Auto-refresh: <span id="refresh-interval">2s</span>
-        </div>
-    </div>
-
-    <script>
-        let autoRefresh = true;
-        let refreshTimer;
-        
-        function updateConsole() {
-            fetch('/console-data')
-                .then(response => response.json())
-                .then(data => {
-                    const console = document.getElementById('console');
-                    console.innerHTML = '';
-                    
-                    data.lines.forEach(line => {
-                        const div = document.createElement('div');
-                        div.className = 'console-line';
-                        div.textContent = line;
-                        console.appendChild(div);
-                    });
-                    
-                    // Auto-scroll to bottom
-                    console.scrollTop = console.scrollHeight;
-                    
-                    // Update status
-                    document.getElementById('last-update').textContent = new Date().toLocaleTimeString();
-                    document.getElementById('line-count').textContent = data.lines.length;
-                })
-                .catch(error => {
-                    console.error('Failed to fetch console data:', error);
-                });
-        }
-        
-        function toggleAutoRefresh() {
-            autoRefresh = !autoRefresh;
-            document.getElementById('refresh-status').textContent = autoRefresh ? 'ON' : 'OFF';
-            
-            if (autoRefresh) {
-                startAutoRefresh();
-            } else {
-                clearInterval(refreshTimer);
-            }
-        }
-        
-        function startAutoRefresh() {
-            refreshTimer = setInterval(updateConsole, 2000);
-        }
-        
-        function clearConsole() {
-            fetch('/console-data?clear=1')
-                .then(() => updateConsole());
-        }
-        
-        function refreshConsole() {
-            updateConsole();
-        }
-        
-        // Start auto-refresh
-        updateConsole();
-        startAutoRefresh();
-    </script>
-</body>
-</html>
-)";
+  String html = "<!DOCTYPE html><html><head>";
+  html += "<title>Muffsy Console</title>";
+  html += "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">";
+  html += "<style>";
+  html += "body { font-family: 'Courier New', monospace; margin: 0; padding: 20px; background: #1e1e1e; color: #00ff00; }";
+  html += ".console-container { max-width: 1000px; margin: 0 auto; background: #000; border: 2px solid #333; border-radius: 10px; padding: 20px; }";
+  html += ".console-header { color: #00ffff; text-align: center; margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 10px; }";
+  html += ".console-output { height: 500px; overflow-y: auto; background: #000; border: 1px solid #333; padding: 10px; font-size: 14px; line-height: 1.4; }";
+  html += ".console-line { margin-bottom: 2px; white-space: pre-wrap; word-wrap: break-word; }";
+  html += ".controls { margin-top: 10px; text-align: center; }";
+  html += "button { background: #333; color: #00ff00; border: 1px solid #666; padding: 10px 20px; margin: 0 10px; border-radius: 5px; cursor: pointer; font-family: inherit; }";
+  html += "button:hover { background: #555; }";
+  html += ".status-bar { margin-top: 10px; padding: 10px; background: #222; border-radius: 5px; color: #888; text-align: center; }";
+  html += "</style></head><body>";
+  html += "<div class=\"console-container\">";
+  html += "<div class=\"console-header\"><h1>🎵 Muffsy Input Selector - Console</h1></div>";
+  html += "<div class=\"console-output\" id=\"console\"><div class=\"console-line\">Loading console...</div></div>";
+  html += "<div class=\"controls\">";
+  html += "<button onclick=\"toggleAutoRefresh()\">Auto Refresh: <span id=\"refresh-status\">ON</span></button>";
+  html += "<button onclick=\"clearConsole()\">Clear</button>";
+  html += "<button onclick=\"refreshConsole()\">Refresh Now</button>";
+  html += "<button onclick=\"window.close()\">Close</button>";
+  html += "</div>";
+  html += "<div class=\"status-bar\">";
+  html += "Last updated: <span id=\"last-update\">Never</span> | ";
+  html += "Lines: <span id=\"line-count\">0</span> | ";
+  html += "Auto-refresh: <span id=\"refresh-interval\">2s</span>";
+  html += "</div></div>";
+  
+  html += "<script>";
+  html += "let autoRefresh = true;";
+  html += "let refreshTimer;";
+  html += "function updateConsole() {";
+  html += "fetch('/console-data').then(response => response.json()).then(data => {";
+  html += "const console = document.getElementById('console');";
+  html += "console.innerHTML = '';";
+  html += "data.lines.forEach(line => {";
+  html += "const div = document.createElement('div');";
+  html += "div.className = 'console-line';";
+  html += "div.textContent = line;";
+  html += "console.appendChild(div);";
+  html += "});";
+  html += "console.scrollTop = console.scrollHeight;";
+  html += "document.getElementById('last-update').textContent = new Date().toLocaleTimeString();";
+  html += "document.getElementById('line-count').textContent = data.lines.length;";
+  html += "}).catch(error => { console.error('Failed to fetch console data:', error); });";
+  html += "}";
+  html += "function toggleAutoRefresh() {";
+  html += "autoRefresh = !autoRefresh;";
+  html += "document.getElementById('refresh-status').textContent = autoRefresh ? 'ON' : 'OFF';";
+  html += "if (autoRefresh) { startAutoRefresh(); } else { clearInterval(refreshTimer); }";
+  html += "}";
+  html += "function startAutoRefresh() { refreshTimer = setInterval(updateConsole, 2000); }";
+  html += "function clearConsole() { fetch('/console-data?clear=1').then(() => updateConsole()); }";
+  html += "function refreshConsole() { updateConsole(); }";
+  html += "updateConsole();";
+  html += "startAutoRefresh();";
+  html += "</script></body></html>";
 
   server.send(200, "text/html", html);
 }
