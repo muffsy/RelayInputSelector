@@ -59,6 +59,17 @@
  */
  #define enableSSR 0
 
+/*
+ * Auto power on
+ *
+ * If set to 1, the input selector will power on automatically after the
+ * welcome/getting ready message, without having to press the rotary
+ * encoder pushbutton or the IR remote power button.
+ *
+ * Default 0 (disabled)
+ */
+ #define autoPowerOn 0
+
 /* Mute and Power on / off:
  *
  * The rotary encoder is also a push button, which registers
@@ -307,6 +318,12 @@ void powerOn() { // Only called if powerState is 0 (Ready-status)
 
   // Set powerState to 2 (Powered off). This function will not run again.
   powerState = 2;
+
+  // If autoPowerOn is enabled, power on immediately after the welcome message
+  if (autoPowerOn == 1) {
+    Serial.println("[http://muffsy.com]: Auto power on enabled\n");
+    togglePower();
+  }
 } // End powerOn()
 
  /*
